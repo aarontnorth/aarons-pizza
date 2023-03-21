@@ -1,5 +1,6 @@
-import {Button, Grid, Typography} from "@mui/material";
+import {Grid, Typography} from "@mui/material";
 import {useNavigate} from "react-router-dom";
+import StyledButton from "../components/StyledButton";
 
 const Home = () => {
     const navigate = useNavigate();
@@ -14,14 +15,14 @@ const Home = () => {
             </Grid>
             <Grid container item xs={12} md={4} sx={{mt: 8}}>
                 <Grid item xs={12} md={6} justifyContent={"center"} display={"flex"} sx={{mt: 4}}>
-                    <Button variant={"contained"} onClick={() => {navigate('/order')}} sx={{bgcolor: "#98c379", color: "black"}}>
+                    <StyledButton onClick={() => {navigate('/order')}}>
                         Place an order
-                    </Button>
+                    </StyledButton>
                 </Grid>
                 <Grid item xs={12} md={6} justifyContent={"center"} display={"flex"} sx={{mt: 4}}>
-                    <Button variant={"contained"} onClick={() => {navigate('/order-history')}} sx={{bgcolor: "#98c379", color: "black"}}>
+                    <StyledButton onClick={() => {navigate('/order-history')}} >
                         View order history
-                    </Button>
+                    </StyledButton>
                 </Grid>
             </Grid>
         </Grid>
