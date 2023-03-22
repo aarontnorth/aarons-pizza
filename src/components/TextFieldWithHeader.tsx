@@ -9,9 +9,10 @@ interface TextFieldProps {
 const TextFieldWithHeader = ({label, field}: TextFieldProps ) => {
     return (
         <Grid container direction={'column'} sx={{mb: 4}}>
-            <Typography>{label}</Typography>
+            {/*<Typography>{label}</Typography>*/}
             <TextField
                 {...field}
+                label={label}
                 type={'input'}
                 name={label}
                 variant={"filled"}

@@ -1,16 +1,15 @@
 import React from 'react';
 import axios from 'axios';
-import {useOrderPizza} from './orders';
 import { renderHook, waitFor } from "@testing-library/react";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
-import {mockPizza} from "../test-helpers/mockPizza";
+import {useLogin} from "./auth";
 jest.mock('axios');
 
-describe('Orders Api', () => {
+describe('Auth Api', () => {
     const queryClient = new QueryClient();
 
-    it('should call api to create order', async () => {
-        const pizzaBody = mockPizza();
+    it('should call api to sign in', async () => {
+        const mockAuth = {username: 'name', password: 'pass'};
 
         // @ts-ignore
         const wrapper = ({ children }) => (
@@ -19,12 +18,12 @@ describe('Orders Api', () => {
             </QueryClientProvider>
         );
 
-        const { result } = renderHook(() => useOrderPizza(), {wrapper});
-        result.current.mutate(pizzaBody)
+        const { result } = renderHook(() => useLogin(), {wrapper});
+        result.current.mutate(mockAuth)
 
         await waitFor(() => result.current.isSuccess);
 
-        expect(axios.post).toHaveBeenCalledWith('https://pizza-api-app.herokuapp.com/api/orders', pizzaBody);
+        expect(axios.post).toHaveBeenCalledWith('https://pizza-api-app.herokuapp.com/api/auth', mockAuth);
     });
 
     describe('get', () => {

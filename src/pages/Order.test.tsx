@@ -2,11 +2,11 @@ import "@testing-library/jest-dom";
 import {render, screen} from "@testing-library/react";
 import Order from "./Order";
 import * as orderPizzaHook from "../api/orders";
-import {mockPizza} from "../mockData/mockPizza";
+import {mockPizza} from "../test-helpers/mockPizza";
+import userEvent from "@testing-library/user-event";
+import {renderWithProviders} from "../test-helpers/helper";
 
 import axios from 'axios';
-import userEvent from "@testing-library/user-event";
-import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 jest.mock('axios');
 
 const mockNavigate = jest.fn();
@@ -16,10 +16,9 @@ jest.mock('react-router-dom', () => ({
 }));
 
 describe("<Order>", () => {
-    const queryClient = new QueryClient();
 
     it("should render heading", () => {
-        render(<Order />)
+        renderWithProviders(<Order />)
         expect(screen.getByText("Order a pie!")).toBeInTheDocument();
     });
 
@@ -29,11 +28,7 @@ describe("<Order>", () => {
         jest.spyOn(orderPizzaHook, 'useOrderPizza').mockReturnValue(
         {...jest.requireActual('../api/orders'), mutate: mockMutate}
         );
-        render(
-            <QueryClientProvider client={queryClient}>
-                <Order />
-            </QueryClientProvider>
-        )
+        renderWithProviders(<Order />);
         const orderButton = screen.getByRole('button', {name: 'Submit order'});
         expect(orderButton).toBeInTheDocument();
         userEvent.click(orderButton)

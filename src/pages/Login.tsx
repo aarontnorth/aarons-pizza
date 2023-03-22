@@ -3,9 +3,12 @@ import {useNavigate} from "react-router-dom";
 import TextFieldWithHeader from "../components/TextFieldWithHeader";
 import {Field, Form, Formik} from "formik";
 import StyledButton from "../components/StyledButton";
+import authContext from "../contexts/AuthContext";
+import {useContext} from "react";
 
 const Login = () => {
     const navigate = useNavigate();
+    const {login} = useContext(authContext);
 
     return (
         <Grid container sx={{mt: 20}} justifyContent={"center"}>
@@ -19,15 +22,14 @@ const Login = () => {
                 <Formik
                     initialValues={{ username: '', password: '' }}
                     onSubmit={(values, actions) => {
-                        console.log({ values, actions });
-                        alert(JSON.stringify(values, null, 2));
+                        login(values)
                         actions.setSubmitting(false);
                     }}
                 >
                     <Form>
                         <Field component={TextFieldWithHeader} name="username" label={"username"} />
                         <Field component={TextFieldWithHeader} name="password" label={"password"} />
-                        <StyledButton type="submit">Submit</StyledButton>
+                        <StyledButton type="submit">Sign in</StyledButton>
                     </Form>
                 </Formik>
             </Grid>

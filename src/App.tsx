@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Order from "./pages/Order";
 import {createTheme, CssBaseline, ThemeProvider} from "@mui/material";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
+import {AuthProvider} from "./contexts/AuthContext";
 
 const theme = createTheme({
     palette: {
@@ -23,16 +24,18 @@ function App() {
 
   return (
       <QueryClientProvider client={queryClient}>
-          <ThemeProvider theme={theme}>
-              <CssBaseline />
-              <BrowserRouter>
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/order" element={<Order />} />
-                </Routes>
-              </BrowserRouter>
-          </ThemeProvider>
+          <AuthProvider>
+              <ThemeProvider theme={theme}>
+                  <CssBaseline />
+                  <BrowserRouter>
+                    <Routes>
+                      <Route path="/" element={<Home />} />
+                      <Route path="/login" element={<Login />} />
+                      <Route path="/order" element={<Order />} />
+                    </Routes>
+                  </BrowserRouter>
+              </ThemeProvider>
+          </AuthProvider>
       </QueryClientProvider>
   );
 }
