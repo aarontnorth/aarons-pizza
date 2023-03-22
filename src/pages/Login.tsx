@@ -1,14 +1,20 @@
-import {Grid, Typography} from "@mui/material";
-import {useNavigate} from "react-router-dom";
+import { Grid, Typography} from "@mui/material";
 import TextFieldWithHeader from "../components/TextFieldWithHeader";
 import {Field, Form, Formik} from "formik";
 import StyledButton from "../components/StyledButton";
 import authContext from "../contexts/AuthContext";
-import {useContext} from "react";
+import {useContext, useEffect} from "react";
+import {useNavigate} from "react-router-dom";
 
 const Login = () => {
+    const {isAuthenticated, token, login} = useContext(authContext);
     const navigate = useNavigate();
-    const {login} = useContext(authContext);
+
+    useEffect(() => {
+        if(isAuthenticated){
+            navigate('/')
+        }
+    },[isAuthenticated])
 
     return (
         <Grid container sx={{mt: 20}} justifyContent={"center"}>

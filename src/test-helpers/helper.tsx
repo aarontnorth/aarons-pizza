@@ -1,15 +1,21 @@
 import {render} from "@testing-library/react";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
-import { ReactElement } from "react";
-import {AuthProvider} from "../contexts/AuthContext";
+import React, { ReactElement } from "react";
+import AuthContext, {AuthProvider} from "../contexts/AuthContext";
 
-export const renderWithProviders = (children: ReactElement) => {
+interface props {
+    children: React.ReactElement;
+    isAuthenticated?: boolean;
+    login?: () => {};
+}
+
+export const renderWithProviders = ({children, isAuthenticated, login}: props) => {
     const queryClient = new QueryClient();
     return render(
         <QueryClientProvider client={queryClient}>
-            <AuthProvider>
+            <AuthContext.Provider value={{isAuthenticated: isAuthenticated ?? false, login: login ?? jest.fn(), token: ''}}>
                 {children}
-            </AuthProvider>
+            </AuthContext.Provider>
         </QueryClientProvider>
     )
 }

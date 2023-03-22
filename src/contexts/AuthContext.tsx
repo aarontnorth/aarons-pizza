@@ -1,22 +1,38 @@
-import { createContext, useState } from "react";
+import {createContext, useEffect, useState} from "react";
 import {AuthInfo, useLogin} from "../api/auth";
 
 const AuthContext = createContext({
   isAuthenticated: false,
-  login: (authInfo: AuthInfo) => {}
+  login: (authInfo: AuthInfo) => {},
+  token: ''
 });
+
+type data = {
+  access_token: string;
+}
 
 export const AuthProvider = ({ children }: any) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState<string>('');
   const getToken = useLogin();
   const login = (authInfo: AuthInfo) => {
     getToken.mutate(authInfo)
-    // setToken(getToken.data);
-    // setIsAuthenticated(true);
+    setIsAuthenticated(true);
   }
+
+  useEffect(() => {
+    if(getToken.isSuccess){
+      const tokenString = getToken.data.data as data
+      setToken(tokenString.access_token);
+    }
+  },[getToken])
+
+  useEffect(() => {
+    // console.log(token)
+  },[token])
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login }}>
+    <AuthContext.Provider value={{ isAuthenticated, login, token }}>
       {children}
     </AuthContext.Provider>
   );

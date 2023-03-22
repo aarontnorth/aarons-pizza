@@ -1,5 +1,5 @@
 import "@testing-library/jest-dom";
-import {render, screen} from "@testing-library/react";
+import {screen} from "@testing-library/react";
 import Order from "./Order";
 import * as orderPizzaHook from "../api/orders";
 import {mockPizza} from "../test-helpers/mockPizza";
@@ -18,7 +18,7 @@ jest.mock('react-router-dom', () => ({
 describe("<Order>", () => {
 
     it("should render heading", () => {
-        renderWithProviders(<Order />)
+        renderWithProviders({children : <Order />})
         expect(screen.getByText("Order a pie!")).toBeInTheDocument();
     });
 
@@ -28,7 +28,7 @@ describe("<Order>", () => {
         jest.spyOn(orderPizzaHook, 'useOrderPizza').mockReturnValue(
         {...jest.requireActual('../api/orders'), mutate: mockMutate}
         );
-        renderWithProviders(<Order />);
+        renderWithProviders({children : <Order />});
         const orderButton = screen.getByRole('button', {name: 'Submit order'});
         expect(orderButton).toBeInTheDocument();
         userEvent.click(orderButton)

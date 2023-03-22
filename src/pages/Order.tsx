@@ -1,10 +1,8 @@
 import {Grid, Typography} from "@mui/material";
-import {useNavigate} from "react-router-dom";
 import StyledButton from "../components/StyledButton";
 import {useOrderPizza} from "../api/orders";
 
 const Order = () => {
-    const navigate = useNavigate();
     const orderPizza = useOrderPizza();
     const defaultPizza = {
         "Crust": "Regular",

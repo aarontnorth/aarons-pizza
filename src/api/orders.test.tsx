@@ -11,6 +11,7 @@ describe('Orders Api', () => {
 
     it('should call api to create order', async () => {
         const pizzaBody = mockPizza();
+        const mockHeader = {'headers': {"authorization": "Bearer "}}
 
         // @ts-ignore
         const wrapper = ({ children }) => (
@@ -24,7 +25,11 @@ describe('Orders Api', () => {
 
         await waitFor(() => result.current.isSuccess);
 
-        expect(axios.post).toHaveBeenCalledWith('https://pizza-api-app.herokuapp.com/api/orders', pizzaBody);
+        expect(axios.post).toHaveBeenCalledWith(
+            'https://pizza-api-app.herokuapp.com/api/orders',
+            pizzaBody,
+            mockHeader
+            );
     });
 
     describe('get', () => {

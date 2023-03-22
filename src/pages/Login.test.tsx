@@ -14,27 +14,21 @@ jest.mock('react-router-dom', () => ({
 
 describe("<Login>", () => {
     it("should render headings", () => {
-        renderWithProviders(<Login />)
+        renderWithProviders({children : <Login />})
         expect(screen.getByText("Hello there!")).toBeInTheDocument();
         expect(screen.getByText("Please sign in")).toBeInTheDocument();
     });
 
     it("should render username and password fields", () => {
-        renderWithProviders(<Login />)
+        renderWithProviders({children : <Login />})
         expect(screen.getByText("username")).toBeInTheDocument();
         expect(screen.getByText("password")).toBeInTheDocument();
     });
 
     it("should submit login request", async () => {
         const expectedCredentials = {username: "user", password: "pass"};
-        const mockMutate = jest.fn();
-        jest.spyOn(loginHook, 'useLogin').mockReturnValue(
-            {
-                ...jest.requireActual('../api/auth'),
-                mutate: mockMutate
-            }
-        );
-        await renderWithProviders(<Login />);
+        const mockLogin = jest.fn();
+        await renderWithProviders({children : <Login />, login: mockLogin});
         const username = screen.getByRole('textbox', {name: 'username'});
         fireEvent.change(username, { target: { value: 'user' } });
         const password = screen.getByRole('textbox', {name: 'password'});
@@ -43,7 +37,12 @@ describe("<Login>", () => {
         expect(signinButton).toBeInTheDocument();
         userEvent.click(signinButton)
         await waitFor(() =>
-            expect(mockMutate).toHaveBeenCalledWith(expectedCredentials)
+            expect(mockLogin).toHaveBeenCalledWith(expectedCredentials)
         )
+    })
+
+    it('should redirect to home if authenticated', async () => {
+        renderWithProviders({children : <Login/>, isAuthenticated : true})
+        expect(mockNavigate).toHaveBeenCalledWith('/')
     })
 });
