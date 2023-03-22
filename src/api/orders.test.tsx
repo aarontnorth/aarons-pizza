@@ -29,7 +29,7 @@ describe('Orders Api', () => {
             'https://pizza-api-app.herokuapp.com/api/orders',
             pizzaBody,
             mockHeader
-            );
+        );
     });
 
     describe('get', () => {

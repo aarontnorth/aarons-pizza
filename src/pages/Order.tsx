@@ -1,14 +1,16 @@
 import {Grid, Typography} from "@mui/material";
 import StyledButton from "../components/StyledButton";
 import {useOrderPizza} from "../api/orders";
+import useOrderSessionStorage from "../hooks/useOrderSessionStorage";
 
 const Order = () => {
     const orderPizza = useOrderPizza();
+    const {currentTable} = useOrderSessionStorage();
     const defaultPizza = {
         "Crust": "Regular",
         "Flavor": "Cheese",
         "Size": "Medium",
-        "Table_No": 1,
+        "Table_No": currentTable,
     }
 
     const handleClick = () => {

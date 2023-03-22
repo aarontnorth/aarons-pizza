@@ -2,6 +2,7 @@ import "@testing-library/jest-dom";
 import {screen} from "@testing-library/react";
 import Order from "./Order";
 import * as orderPizzaHook from "../api/orders";
+import * as sessionHook from "../hooks/useOrderSessionStorage"
 import {mockPizza} from "../test-helpers/mockPizza";
 import userEvent from "@testing-library/user-event";
 import {renderWithProviders} from "../test-helpers/helper";
@@ -28,10 +29,13 @@ describe("<Order>", () => {
         jest.spyOn(orderPizzaHook, 'useOrderPizza').mockReturnValue(
         {...jest.requireActual('../api/orders'), mutate: mockMutate}
         );
+
         renderWithProviders({children : <Order />});
+
         const orderButton = screen.getByRole('button', {name: 'Submit order'});
         expect(orderButton).toBeInTheDocument();
         userEvent.click(orderButton)
+
         expect(mockMutate).toHaveBeenCalledWith(expectedPizza);
     })
 });
