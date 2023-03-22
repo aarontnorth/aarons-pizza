@@ -8,6 +8,7 @@ import {createTheme, CssBaseline, ThemeProvider} from "@mui/material";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {AuthProvider} from "./contexts/AuthContext";
 import {RedirectRoute} from "./components/RedirectRoute";
+import {SnackBarProvider} from "./contexts/SnackBarContext";
 
 const theme = createTheme({
     palette: {
@@ -26,24 +27,26 @@ function App() {
   return (
       <QueryClientProvider client={queryClient}>
           <AuthProvider>
-              <ThemeProvider theme={theme}>
-                  <CssBaseline />
-                  <BrowserRouter>
-                    <Routes>
-                        <Route path="/" element={
-                            <RedirectRoute>
-                                <Home />
-                            </RedirectRoute>}
-                        />
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/order" element={
-                            <RedirectRoute>
-                                <Order />
-                            </RedirectRoute>}
-                        />
-                    </Routes>
-                  </BrowserRouter>
-              </ThemeProvider>
+              <SnackBarProvider>
+                  <ThemeProvider theme={theme}>
+                      <CssBaseline />
+                      <BrowserRouter>
+                        <Routes>
+                            <Route path="/" element={
+                                <RedirectRoute>
+                                    <Home />
+                                </RedirectRoute>}
+                            />
+                            <Route path="/login" element={<Login />} />
+                            <Route path="/order" element={
+                                <RedirectRoute>
+                                    <Order />
+                                </RedirectRoute>}
+                            />
+                        </Routes>
+                      </BrowserRouter>
+                  </ThemeProvider>
+              </SnackBarProvider>
           </AuthProvider>
       </QueryClientProvider>
   );

@@ -1,8 +1,9 @@
 import axios from 'axios';
 import {useMutation} from "@tanstack/react-query";
-import {useContext, useEffect} from "react";
+import {useContext} from "react";
 import authContext from "../contexts/AuthContext";
 import useOrderSessionStorage from "../hooks/useOrderSessionStorage";
+import snackBarContext from "../contexts/SnackBarContext";
 
 export interface Pizza {
     Crust: string;
@@ -13,6 +14,7 @@ export interface Pizza {
 
 export function useOrderPizza() {
     const auth = useContext(authContext);
+    const snack = useContext(snackBarContext)
     const {incrementTable} = useOrderSessionStorage();
     const url = `https://pizza-api-app.herokuapp.com/api/orders`;
     const headers = {'authorization': `Bearer ${auth.token}`}
@@ -22,6 +24,7 @@ export function useOrderPizza() {
         },
         onSuccess: () => {
             incrementTable();
+            snack.handleSetAlert('Thank you for your order!')
         }
     });
 }

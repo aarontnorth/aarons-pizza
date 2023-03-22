@@ -7,13 +7,14 @@ import {useContext, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 
 const Login = () => {
-    const {isAuthenticated, token, login} = useContext(authContext);
+    const {isAuthenticated, login} = useContext(authContext);
     const navigate = useNavigate();
 
     useEffect(() => {
         if(isAuthenticated){
             navigate('/')
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[isAuthenticated])
 
     return (

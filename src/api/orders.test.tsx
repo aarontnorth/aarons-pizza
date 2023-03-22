@@ -4,6 +4,9 @@ import {useOrderPizza} from './orders';
 import { renderHook, waitFor } from "@testing-library/react";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {mockPizza} from "../test-helpers/mockPizza";
+import {screen} from "@testing-library/react";
+import {SnackBarProvider} from "../contexts/SnackBarContext";
+
 jest.mock('axios');
 
 describe('Orders Api', () => {
@@ -15,9 +18,11 @@ describe('Orders Api', () => {
 
         // @ts-ignore
         const wrapper = ({ children }) => (
-            <QueryClientProvider client={queryClient}>
-                {children}
-            </QueryClientProvider>
+            <SnackBarProvider>
+                <QueryClientProvider client={queryClient}>
+                    {children}
+                </QueryClientProvider>
+            </SnackBarProvider>
         );
 
         const { result } = renderHook(() => useOrderPizza(), {wrapper});
@@ -30,6 +35,9 @@ describe('Orders Api', () => {
             pizzaBody,
             mockHeader
         );
+        await waitFor(() => {
+            expect(screen.getByText('Thank you for your order!')).toBeInTheDocument();
+        });
     });
 
     describe('get', () => {
