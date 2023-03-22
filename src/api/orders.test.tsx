@@ -13,7 +13,8 @@ describe('Orders Api', () => {
     const queryClient = new QueryClient();
 
     it('should call api to create order', async () => {
-        const pizzaBody = mockPizza();
+        const pizza = mockPizza();
+        const pizzaBody = {...pizza, table_no: 1}
         const mockHeader = {'headers': {"authorization": "Bearer "}}
 
         // @ts-ignore
@@ -26,7 +27,7 @@ describe('Orders Api', () => {
         );
 
         const { result } = renderHook(() => useOrderPizza(), {wrapper});
-        result.current.mutate(pizzaBody)
+        result.current.mutate(pizza)
 
         await waitFor(() => result.current.isSuccess);
 

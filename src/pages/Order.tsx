@@ -1,33 +1,49 @@
 import {Grid, Typography} from "@mui/material";
 import StyledButton from "../components/StyledButton";
 import {useOrderPizza} from "../api/orders";
-import useOrderSessionStorage from "../hooks/useOrderSessionStorage";
+import {Field, Form, Formik} from "formik";
+import TextFieldWithHeader from "../components/TextFieldWithHeader";
 
 const Order = () => {
     const orderPizza = useOrderPizza();
-    const {currentTable} = useOrderSessionStorage();
-    const defaultPizza = {
-        "Crust": "Regular",
-        "Flavor": "Cheese",
-        "Size": "Medium",
-        "Table_No": currentTable,
-    }
 
-    const handleClick = () => {
-        orderPizza.mutate(defaultPizza);
+    // @ts-ignore
+    const handleClick = (values) => {
+        const pizza = {
+            "Crust": values.crust,
+            "Flavor": values.flavor,
+            "Size": values.size,
+        }
+        orderPizza.mutate(pizza);
     }
 
     return (
-        <Grid container sx={{mt: 20}} justifyContent={"center"}>
-            <Grid item xs={12} sx={{textAlign: "center"}}>
-                <Typography variant={"h1"}>Order a pie!</Typography>
-            </Grid>
-            {/*<Grid item xs={12} sx={{textAlign: "center"}}>*/}
-            {/*    <Typography variant={"h2"}>Customize your order</Typography>*/}
-            {/*</Grid>*/}
-            <StyledButton sx={{mt: 4}} onClick={handleClick}>
-                Submit order
-            </StyledButton>
+        <Grid
+            container
+            sx={{mt: 20}}
+            textAlign={"center"}
+            direction={"column"}
+            alignItems={"center"}
+        >
+            <Typography variant={"h1"}>Order a pie!</Typography>
+            <Typography variant={"h2"}>Customize your order</Typography>
+            <Formik
+                initialValues={{ crust: "Regular", flavor: "Cheese", size: "Medium" }}
+                onSubmit={(values, actions) => {
+                    handleClick(values)
+                    actions.setSubmitting(false);
+                }}
+            >
+                <Form>
+                    <Field component={TextFieldWithHeader} name="crust" label={"crust"} />
+                    <Field component={TextFieldWithHeader} name="flavor" label={"flavor"} />
+                    <Field component={TextFieldWithHeader} name="size" label={"size"} />
+                    <StyledButton sx={{mt: 4, width: 'fit-content'}} type={'submit'}>
+                        Submit order
+                    </StyledButton>
+                </Form>
+            </Formik>
+
         </Grid>
     )
 }

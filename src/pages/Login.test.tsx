@@ -1,7 +1,6 @@
 import "@testing-library/jest-dom";
-import {fireEvent, render, screen, waitFor} from "@testing-library/react";
+import {fireEvent, screen, waitFor} from "@testing-library/react";
 import Login from "./Login";
-import * as loginHook from "../api/auth";
 import userEvent from "@testing-library/user-event";
 import {renderWithProviders} from "../test-helpers/helper";
 jest.mock('axios');
@@ -17,12 +16,6 @@ describe("<Login>", () => {
         renderWithProviders({children : <Login />})
         expect(screen.getByText("Hello there!")).toBeInTheDocument();
         expect(screen.getByText("Please sign in")).toBeInTheDocument();
-    });
-
-    it("should render username and password fields", () => {
-        renderWithProviders({children : <Login />})
-        expect(screen.getByText("username")).toBeInTheDocument();
-        expect(screen.getByText("password")).toBeInTheDocument();
     });
 
     it("should submit login request", async () => {

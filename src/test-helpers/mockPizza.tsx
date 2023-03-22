@@ -3,6 +3,13 @@ export const mockPizza = () => {
         "Crust": "Regular",
         "Flavor": "Cheese",
         "Size": "Medium",
-        "Table_No": 1,
     }
 };
+
+export const customPizza = (crust: string, flavor: string, size: string) => {
+    return {
+        "Crust": crust,
+        "Flavor": flavor,
+        "Size": size,
+    }
+}
