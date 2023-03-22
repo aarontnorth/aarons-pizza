@@ -1,7 +1,7 @@
 import {render} from "@testing-library/react";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
-import React, { ReactElement } from "react";
-import AuthContext, {AuthProvider} from "../contexts/AuthContext";
+import React from "react";
+import AuthContext from "../contexts/AuthContext";
 
 interface props {
     children: React.ReactElement;

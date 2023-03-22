@@ -1,9 +1,12 @@
 import {Grid, Typography} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import StyledButton from "../components/StyledButton";
+import {useContext} from "react";
+import authContext from "../contexts/AuthContext";
 
 const Home = () => {
     const navigate = useNavigate();
+    const { isAuthenticated } = useContext(authContext);
 
     return (
         <Grid container sx={{mt: 20}} justifyContent={"center"}>

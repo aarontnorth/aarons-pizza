@@ -27,10 +27,6 @@ export const AuthProvider = ({ children }: any) => {
     }
   },[getToken])
 
-  useEffect(() => {
-    // console.log(token)
-  },[token])
-
   return (
     <AuthContext.Provider value={{ isAuthenticated, login, token }}>
       {children}

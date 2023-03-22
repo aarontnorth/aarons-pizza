@@ -7,6 +7,7 @@ import Order from "./pages/Order";
 import {createTheme, CssBaseline, ThemeProvider} from "@mui/material";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {AuthProvider} from "./contexts/AuthContext";
+import {RedirectRoute} from "./components/RedirectRoute";
 
 const theme = createTheme({
     palette: {
@@ -29,9 +30,17 @@ function App() {
                   <CssBaseline />
                   <BrowserRouter>
                     <Routes>
-                      <Route path="/" element={<Home />} />
-                      <Route path="/login" element={<Login />} />
-                      <Route path="/order" element={<Order />} />
+                        <Route path="/" element={
+                            <RedirectRoute>
+                                <Home />
+                            </RedirectRoute>}
+                        />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/order" element={
+                            <RedirectRoute>
+                                <Order />
+                            </RedirectRoute>}
+                        />
                     </Routes>
                   </BrowserRouter>
               </ThemeProvider>
