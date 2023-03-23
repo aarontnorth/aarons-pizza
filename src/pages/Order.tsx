@@ -1,4 +1,3 @@
-import {Grid, Typography} from "@mui/material";
 import StyledButton from "../components/StyledButton";
 import {useOrderPizza} from "../api/orders";
 import {Field, Form, Formik} from "formik";
