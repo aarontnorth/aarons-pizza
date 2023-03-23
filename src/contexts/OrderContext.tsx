@@ -1,5 +1,5 @@
 import {createContext, useContext, useEffect, useState} from "react";
-import {useMutation, useQuery} from "@tanstack/react-query";
+import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import authContext from "../contexts/AuthContext";
 import {createOrderForTable, deleteOrderById, getOrders} from "../api/orders";
 import {Order, Pizza} from "../types";
@@ -20,6 +20,7 @@ const OrderContext = createContext<ContextProps>({
 
 export const OrderProvider = ({ children }: any) => {
   const {currentTable, incrementTable} = useOrderSessionStorage();
+  const queryClient = useQueryClient()
   const [orders, setOrders] = useState<Order[]>([]);
   const snack = useContext(snackBarContext);
   const auth = useContext(authContext);
@@ -47,10 +48,15 @@ export const OrderProvider = ({ children }: any) => {
     createOrderMutation.mutate(pizza);
   }
 
-  const deleteMutation = useMutation(
-      async (orderId: string) => {
-        return await deleteOrderById(orderId, auth.token);
-      },
+  const deleteMutation = useMutation({
+        mutationFn:
+            async (orderId: string) => {
+              return await deleteOrderById(orderId, auth.token);
+            },
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['fetch-orders'] })
+        }
+      }
   )
 
   const deleteOrder = (orderId: string) => {
