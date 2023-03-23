@@ -11,6 +11,7 @@ import {AuthProvider} from "./contexts/AuthContext";
 import {RedirectRoute} from "./components/RedirectRoute";
 import {SnackBarProvider} from "./contexts/SnackBarContext";
 import {OrderProvider} from "./contexts/OrderContext";
+import {SearchProvider} from "./contexts/SearchContext";
 
 const theme = createTheme({
     palette: {
@@ -31,6 +32,7 @@ function App() {
           <AuthProvider>
               <SnackBarProvider>
                   <OrderProvider>
+                      <SearchProvider>
                    <ThemeProvider theme={theme}>
                       <CssBaseline />
                       <BrowserRouter>
@@ -54,6 +56,7 @@ function App() {
                         </Routes>
                       </BrowserRouter>
                    </ThemeProvider>
+                      </SearchProvider>
                   </OrderProvider>
               </SnackBarProvider>
           </AuthProvider>

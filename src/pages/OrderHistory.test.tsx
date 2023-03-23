@@ -1,5 +1,5 @@
 import "@testing-library/jest-dom";
-import {screen, waitFor} from "@testing-library/react";
+import {fireEvent, screen, waitFor} from "@testing-library/react";
 import OrderHistory from "../pages/OrderHistory";
 import {renderWithProviders} from "../test-helpers/helper";
 import userEvent from "@testing-library/user-event";
@@ -14,6 +14,7 @@ describe("<OrderHistory>", () => {
     it("should render headings", () => {
         renderWithProviders({children: <OrderHistory />})
         expect(screen.getByText("Order History")).toBeInTheDocument();
+        expect(screen.getByText("Filter your orders")).toBeInTheDocument();
     });
 
     it("should render orders", () => {
@@ -29,6 +30,17 @@ describe("<OrderHistory>", () => {
         userEvent.click(deleteButton);
         await waitFor(() => {
             expect(mockDelete).toHaveBeenCalledWith('1234')
+        })
+    })
+
+    it("should search orders", async () => {
+        const mockSearch = jest.fn();
+        renderWithProviders({children: <OrderHistory />, search: mockSearch })
+        const searchBar = screen.getByRole('textbox', {name: 'search'});
+        fireEvent.change(searchBar, { target: { value: 'Cheese' } });
+        fireEvent.click(screen.getByRole('button', {name: 'Search'}))
+        await waitFor(() => {
+            expect(mockSearch).toHaveBeenCalledWith('Cheese')
         })
     })
 });

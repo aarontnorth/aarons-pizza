@@ -1,10 +1,12 @@
-import {render} from "@testing-library/react";
+import {fireEvent, render, screen} from "@testing-library/react";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import React from "react";
 import AuthContext from "../contexts/AuthContext";
 import OrderContext from "../contexts/OrderContext";
 import {mockOrder1234, mockOrder5678} from "../test-helpers/mockOrder";
 import {Pizza} from "../types";
+import SearchContext from "../contexts/SearchContext";
+import userEvent from "@testing-library/user-event";
 
 interface props {
     children: React.ReactElement;
@@ -12,11 +14,12 @@ interface props {
     login?: () => {};
     deleteOrder?: (orderId: string) => {};
     createOrder?: (pizza: Pizza) => {};
+    search?: (searchTerm: string) => {};
 }
 
 export const mockQueryClient = new QueryClient();
 
-export const renderWithProviders = ({children, isAuthenticated, login, deleteOrder, createOrder}: props) => {
+export const renderWithProviders = ({children, isAuthenticated, login, deleteOrder, createOrder, search}: props) => {
     return render(
 
         <QueryClientProvider client={mockQueryClient}>
@@ -26,8 +29,10 @@ export const renderWithProviders = ({children, isAuthenticated, login, deleteOrd
                         orders: [mockOrder1234(), mockOrder5678()],
                         deleteOrder: deleteOrder ?? jest.fn(),
                         createOrder: createOrder ?? jest.fn()
-                }}>
-                    {children}
+                    }}>
+                    <SearchContext.Provider value={{filteredOrders: [mockOrder1234(), mockOrder5678()], search: search ?? jest.fn()}}>
+                        {children}
+                    </SearchContext.Provider>
                 </OrderContext.Provider>
             </AuthContext.Provider>
         </QueryClientProvider>
