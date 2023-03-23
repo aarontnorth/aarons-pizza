@@ -1,15 +1,10 @@
 import axios from 'axios';
-import {useMutation} from "@tanstack/react-query";
 
-export interface AuthInfo {
+export interface Credentials {
     username: string;
     password: string;
 }
 
-export function useLogin() {
-    return useMutation({
-        mutationFn: (auth: AuthInfo) => {
-            return axios.post(`https://pizza-api-app.herokuapp.com/api/auth`, auth);
-        }
-    });
+export async function authenticateUser(credentials: Credentials){
+    return axios.post(`https://pizza-api-app.herokuapp.com/api/auth`, credentials)
 }

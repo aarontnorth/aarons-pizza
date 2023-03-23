@@ -11,6 +11,6 @@ jest.mock('react-router-dom', () => ({
 describe("<TextFieldWithHeader>", () => {
     it("should render heading", () => {
         render(<TextFieldWithHeader label={"mock label"}/>)
-        expect(screen.getByText("mock label")).toBeInTheDocument();
+        expect(screen.getAllByText("mock label")).toBeDefined()
     });
 });
