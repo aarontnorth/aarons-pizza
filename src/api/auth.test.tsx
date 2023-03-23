@@ -1,7 +1,6 @@
-import React from 'react';
 import axios from 'axios';
-import { waitFor } from "@testing-library/react";
-import {authenticateUser} from "../api/auth";
+import { waitFor } from '@testing-library/react';
+import {authenticateUser} from '../api/auth';
 jest.mock('axios');
 
 describe('Auth Api', () => {

@@ -1,10 +1,11 @@
-import {createContext, useContext, useEffect, useState} from "react";
-import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
-import authContext from "../contexts/AuthContext";
-import {createOrderForTable, deleteOrderById, getOrders} from "../api/orders";
-import {Order, Pizza} from "../types";
-import useOrderSessionStorage from "../hooks/useOrderSessionStorage";
-import snackBarContext from "../contexts/SnackBarContext";
+import React from 'react';
+import {createContext, useContext, useEffect, useState} from 'react';
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
+import authContext from '../contexts/AuthContext';
+import {createOrderForTable, deleteOrderById, getOrders} from '../api/orders';
+import {Order, Pizza} from '../types';
+import useOrderSessionStorage from '../hooks/useOrderSessionStorage';
+import snackBarContext from '../contexts/SnackBarContext';
 
 interface ContextProps {
   orders: Order[];
@@ -14,13 +15,15 @@ interface ContextProps {
 
 const OrderContext = createContext<ContextProps>({
   orders: [],
+  // eslint-disable-next-line unused-imports/no-unused-vars
   deleteOrder: (orderId: string) => {},
+  // eslint-disable-next-line unused-imports/no-unused-vars
   createOrder: (pizza: Pizza) => {},
 });
 
 export const OrderProvider = ({ children }: any) => {
   const {currentTable, incrementTable} = useOrderSessionStorage();
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
   const [orders, setOrders] = useState<Order[]>([]);
   const snack = useContext(snackBarContext);
   const auth = useContext(authContext);
@@ -29,10 +32,10 @@ export const OrderProvider = ({ children }: any) => {
     queryKey: ['fetch-orders'],
     queryFn: async () => {return await getOrders(auth.token!!)
         .then(response => {
-      return response.data
+      return response.data;
     });
     }
-  })
+  });
 
   const createOrderMutation = useMutation( {
     mutationFn: async (pizza: Pizza) => {
@@ -40,13 +43,13 @@ export const OrderProvider = ({ children }: any) => {
     },
     onSuccess: () => {
       incrementTable();
-      snack.handleSetAlert('Thank you for your order!')
+      snack.handleSetAlert('Thank you for your order!');
     }
   });
 
   const createOrder = (pizza: Pizza) => {
     createOrderMutation.mutate(pizza);
-  }
+  };
 
   const deleteMutation = useMutation({
         mutationFn:
@@ -54,20 +57,20 @@ export const OrderProvider = ({ children }: any) => {
               return await deleteOrderById(orderId, auth.token!!);
             },
         onSuccess: () => {
-          queryClient.invalidateQueries({ queryKey: ['fetch-orders'] })
+          queryClient.invalidateQueries({ queryKey: ['fetch-orders'] });
         }
       }
-  )
+  );
 
   const deleteOrder = (orderId: string) => {
     deleteMutation.mutate(orderId);
-  }
+  };
 
   useEffect(() => {
     if(data){
-      setOrders(data)
+      setOrders(data);
     }
-  },[data])
+  },[data]);
 
   return (
     <OrderContext.Provider value={{ orders, createOrder, deleteOrder }}>

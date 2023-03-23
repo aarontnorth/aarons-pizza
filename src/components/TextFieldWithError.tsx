@@ -1,4 +1,5 @@
-import {TextField, Grid, styled, Typography} from "@mui/material";
+import React from 'react';
+import {TextField, Grid, styled, Typography} from '@mui/material';
 
 interface TextFieldProps {
     label: string;
@@ -42,9 +43,9 @@ const TextFieldWithError = ({label, field, hasError, errorText}: TextFieldProps 
                 type={'input'}
                 name={label}
             />
-            {hasError && <Typography sx={{color: "red"}}>{errorText}</Typography>}
+            {hasError && <Typography sx={{color: 'red'}}>{errorText}</Typography>}
         </Grid>
-    )
-}
+    );
+};
 
-export default TextFieldWithError
+export default TextFieldWithError;

@@ -1,12 +1,12 @@
-import {fireEvent, render, screen} from "@testing-library/react";
-import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
-import React from "react";
-import AuthContext from "../contexts/AuthContext";
-import OrderContext from "../contexts/OrderContext";
-import {mockOrder1234, mockOrder5678} from "../test-helpers/mockOrder";
-import {Pizza} from "../types";
-import SearchContext from "../contexts/SearchContext";
-import userEvent from "@testing-library/user-event";
+import {fireEvent, render, screen} from '@testing-library/react';
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
+import React from 'react';
+import AuthContext from '../contexts/AuthContext';
+import OrderContext from '../contexts/OrderContext';
+import {mockOrder1234, mockOrder5678} from '../test-helpers/mockOrder';
+import {Pizza} from '../types';
+import SearchContext from '../contexts/SearchContext';
+import userEvent from '@testing-library/user-event';
 
 interface props {
     children: React.ReactElement;
@@ -20,13 +20,13 @@ interface props {
 export const setField = (fieldName: string, newValue: string) => {
     const field = screen.getByRole('textbox', {name: fieldName});
     fireEvent.change(field, { target: { value: newValue } });
-}
+};
 
 export const clickButton = (buttonName: string) => {
     const button = screen.getByRole('button', {name: buttonName});
     expect(button).toBeInTheDocument();
-    userEvent.click(button)
-}
+    userEvent.click(button);
+};
 
 export const mockQueryClient = new QueryClient();
 
@@ -47,5 +47,5 @@ export const renderWithProviders = ({children, isAuthenticated, login, deleteOrd
                 </OrderContext.Provider>
             </AuthContext.Provider>
         </QueryClientProvider>
-    )
-}
+    );
+};

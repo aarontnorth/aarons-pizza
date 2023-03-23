@@ -1,6 +1,6 @@
-import React from "react";
-import {Button, Card, CardContent, Grid, Typography} from "@mui/material";
-import {Order} from "../types";
+import React from 'react';
+import {Button, Card, CardContent, Grid, Typography} from '@mui/material';
+import {Order} from '../types';
 
 interface OrderCardProps {
     order: Order;
@@ -9,7 +9,7 @@ interface OrderCardProps {
 
 const toSentenceCase = (text: string) => {
     return text.slice(0,1).toUpperCase() + text.slice(1).toLowerCase();
-}
+};
 
 export const OrderCard = ({order, onDelete}: OrderCardProps) => {
     const size = toSentenceCase(order.Size);
@@ -18,7 +18,7 @@ export const OrderCard = ({order, onDelete}: OrderCardProps) => {
 
     const handleClick = () => {
         onDelete(order.Order_ID);
-    }
+    };
 
     const pizzaDetail = (detail: string) => {
         return (
@@ -27,11 +27,11 @@ export const OrderCard = ({order, onDelete}: OrderCardProps) => {
                     {detail}
                 </Typography>
             </Grid>
-        )
-    }
+        );
+    };
 
     return (
-        <Grid container justifyContent={"left"} sx={{mb: 4}}>
+        <Grid container justifyContent={'left'} sx={{mb: 4}}>
             <Grid item xs={12} display={'flex'} alignItems={'left'}>
                 <Typography>{`Order: ${order.Order_ID}`}</Typography>
             </Grid>
@@ -64,5 +64,5 @@ export const OrderCard = ({order, onDelete}: OrderCardProps) => {
                 </Card>
             </Grid>
         </Grid>
-    )
-}
+    );
+};

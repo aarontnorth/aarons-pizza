@@ -6,5 +6,5 @@ export interface Credentials {
 }
 
 export async function authenticateUser(credentials: Credentials){
-    return axios.post(`https://pizza-api-app.herokuapp.com/api/auth`, credentials)
+    return axios.post('https://pizza-api-app.herokuapp.com/api/auth', credentials);
 }

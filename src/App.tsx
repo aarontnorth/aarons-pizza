@@ -1,25 +1,25 @@
 import React from 'react';
 import './App.css';
-import {BrowserRouter, Route, Routes} from "react-router-dom";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Order from "./pages/Order";
-import OrderHistory from "./pages/OrderHistory";
-import {createTheme, CssBaseline, ThemeProvider} from "@mui/material";
-import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
-import {AuthProvider} from "./contexts/AuthContext";
-import {RedirectRoute} from "./components/RedirectRoute";
-import {SnackBarProvider} from "./contexts/SnackBarContext";
-import {OrderProvider} from "./contexts/OrderContext";
-import {SearchProvider} from "./contexts/SearchContext";
+import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Order from './pages/Order';
+import OrderHistory from './pages/OrderHistory';
+import {createTheme, CssBaseline, ThemeProvider} from '@mui/material';
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
+import {AuthProvider} from './contexts/AuthContext';
+import {RedirectRoute} from './components/RedirectRoute';
+import {SnackBarProvider} from './contexts/SnackBarContext';
+import {OrderProvider} from './contexts/OrderContext';
+import {SearchProvider} from './contexts/SearchContext';
 
 const theme = createTheme({
     palette: {
         background: {
-            default: "#054c81"
+            default: '#054c81'
         },
         text: {
-            primary: "#ffffff"
+            primary: '#ffffff'
         }
     },
 });

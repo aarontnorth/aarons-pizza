@@ -1,8 +1,8 @@
-import React from "react";
-import {createContext, useContext, useEffect, useState} from "react";
-import OrderContext from "../contexts/OrderContext";
-import lunr from "lunr";
-import {Order} from "../types";
+import React from 'react';
+import {createContext, useContext, useEffect, useState} from 'react';
+import OrderContext from '../contexts/OrderContext';
+import lunr from 'lunr';
+import {Order} from '../types';
 
 interface ContextProps {
   filteredOrders: Order[];
@@ -22,31 +22,31 @@ export const SearchProvider = ({ children }: any) => {
   // eslint-disable-next-line
   useEffect(() => {
     setFilteredOrders(orders);
-  })
+  });
 
   const idx = lunr(function () {
-    this.ref('Order_ID')
-    this.field('Order_ID')
-    this.field('Crust')
-    this.field('Flavor')
-    this.field('Size')
-    this.field('Table_No')
-    this.field('Timestamp')
+    this.ref('Order_ID');
+    this.field('Order_ID');
+    this.field('Crust');
+    this.field('Flavor');
+    this.field('Size');
+    this.field('Table_No');
+    this.field('Timestamp');
 
     orders.forEach(function (order) {
       // @ts-ignore
-      this.add(order)
-    }, this)
-  })
+      this.add(order);
+    }, this);
+  });
 
   const search = (searchTerm: string) => {
     const isOrderInResults = (order: Order) => {
-      return orderIdsFromResults.includes(order.Order_ID.toString())
-    }
+      return orderIdsFromResults.includes(order.Order_ID.toString());
+    };
     const searchResults = idx.search(searchTerm);
     const orderIdsFromResults = searchResults.map(result => result.ref);
     setFilteredOrders(orders.filter(order => isOrderInResults(order)));
-  }
+  };
 
   return (
     <SearchContext.Provider value={{ filteredOrders , search }}>

@@ -1,8 +1,8 @@
-import React from "react";
-import {createContext, useEffect, useState} from "react";
-import {authenticateUser, Credentials} from "../api/auth";
-import {useSessionStorage} from "usehooks-ts";
-import {useMutation} from "@tanstack/react-query";
+import React from 'react';
+import {createContext, useEffect, useState} from 'react';
+import {authenticateUser, Credentials} from '../api/auth';
+import {useSessionStorage} from 'usehooks-ts';
+import {useMutation} from '@tanstack/react-query';
 
 interface AuthContextProps {
   isAuthenticated: boolean;
@@ -22,28 +22,28 @@ type tokenResponse = {
 }
 
 export const AuthProvider = ({ children }: any) => {
-  const [token, setToken] = useSessionStorage<string | undefined>('token', undefined)
+  const [token, setToken] = useSessionStorage<string | undefined>('token', undefined);
   const [isAuthenticated, setIsAuthenticated] = useState(token !== undefined);
 
   const authMutation = useMutation({
     mutationFn: async (credentials: Credentials) => {
-      return await authenticateUser(credentials).then(response => { return response.data});
+      return await authenticateUser(credentials).then(response => { return response.data;});
     },
     onSuccess: (data) => {
-      const tokenResponse = data as tokenResponse
+      const tokenResponse = data as tokenResponse;
       setToken(tokenResponse.access_token);
       setIsAuthenticated(true);
     }
-  })
+  });
 
   const login = (credentials: Credentials) => {
-    authMutation.mutate(credentials)
-  }
+    authMutation.mutate(credentials);
+  };
 
   // eslint-disable-next-line
   useEffect(() => {
-    if(token){setIsAuthenticated(true)}
-  })
+    if(token){setIsAuthenticated(true);}
+  });
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, login, token }}>

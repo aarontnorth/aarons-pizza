@@ -1,10 +1,11 @@
-import StyledButton from "../components/StyledButton";
-import {Field, Form, Formik} from "formik";
-import TextFieldWithError from "../components/TextFieldWithError";
-import {PageWrapper} from "../components/PageWrapper";
-import {useContext} from "react";
-import OrderContext from "../contexts/OrderContext";
-import * as Yup from "yup";
+import React from 'react';
+import StyledButton from '../components/StyledButton';
+import {Field, Form, Formik} from 'formik';
+import TextFieldWithError from '../components/TextFieldWithError';
+import {PageWrapper} from '../components/PageWrapper';
+import {useContext} from 'react';
+import OrderContext from '../contexts/OrderContext';
+import * as Yup from 'yup';
 
 const Order = () => {
     const {createOrder} = useContext(OrderContext);
@@ -18,43 +19,43 @@ const Order = () => {
     // @ts-ignore
     const handleClick = (values) => {
         const pizza = {
-            "Crust": values.crust,
-            "Flavor": values.flavor,
-            "Size": values.size,
-        }
+            'Crust': values.crust,
+            'Flavor': values.flavor,
+            'Size': values.size,
+        };
         createOrder(pizza);
-    }
+    };
 
     return (
-        <PageWrapper heading={"Order a pie!"} subheading={"Customize your order"}>
+        <PageWrapper heading={'Order a pie!'} subheading={'Customize your order'}>
             <Formik
                 validationSchema={orderSchema}
-                initialValues={{ crust: "Regular", flavor: "Cheese", size: "Medium" }}
+                initialValues={{ crust: 'Regular', flavor: 'Cheese', size: 'Medium' }}
                 onSubmit={(values, actions) => {
-                    handleClick(values)
+                    handleClick(values);
                     actions.setSubmitting(false);
                 }}
             >
                 {({ errors, touched }) => (
-                    <Form autoComplete={"off"}>
+                    <Form autoComplete={'off'}>
                         <Field
                             component={TextFieldWithError}
                             name="crust"
-                            label={"crust"}
+                            label={'crust'}
                             hasError={errors.crust && touched.crust}
                             errorText={errors.crust}
                         />
                         <Field
                             component={TextFieldWithError}
                             name="flavor"
-                            label={"flavor"}
+                            label={'flavor'}
                             hasError={errors.flavor && touched.flavor}
                             errorText={errors.flavor}
                         />
                         <Field
                             component={TextFieldWithError}
                             name="size"
-                            label={"size"}
+                            label={'size'}
                             hasError={errors.size && touched.size}
                             errorText={errors.size}
                         />
@@ -65,7 +66,7 @@ const Order = () => {
                 )}
             </Formik>
         </PageWrapper>
-    )
-}
+    );
+};
 
-export default Order
+export default Order;

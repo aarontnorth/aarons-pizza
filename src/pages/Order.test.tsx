@@ -1,10 +1,10 @@
-import "@testing-library/jest-dom";
-import {screen, waitFor} from "@testing-library/react";
-import Order from "./Order";
-import {customPizza, mockPizza} from "../test-helpers/mockPizza";
-import {clickButton, renderWithProviders, setField} from "../test-helpers/helper";
+import React from 'react';
+import '@testing-library/jest-dom';
+import {screen, waitFor} from '@testing-library/react';
+import Order from './Order';
+import {customPizza, mockPizza} from '../test-helpers/mockPizza';
+import {clickButton, renderWithProviders, setField} from '../test-helpers/helper';
 
-import axios from 'axios';
 jest.mock('axios');
 
 const mockNavigate = jest.fn();
@@ -13,17 +13,17 @@ jest.mock('react-router-dom', () => ({
     useNavigate: () => mockNavigate,
 }));
 
-describe("<Order>", () => {
+describe('<Order>', () => {
 
-    it("should render headings", () => {
-        renderWithProviders({children : <Order />})
-        expect(screen.getByText("Order a pie!")).toBeInTheDocument();
-        expect(screen.getByText("Customize your order")).toBeInTheDocument();
+    it('should render headings', () => {
+        renderWithProviders({children : <Order />});
+        expect(screen.getByText('Order a pie!')).toBeInTheDocument();
+        expect(screen.getByText('Customize your order')).toBeInTheDocument();
     });
 
     it('should submit default order', async () => {
         const expectedPizza = mockPizza();
-        const mockCreateOrder = jest.fn()
+        const mockCreateOrder = jest.fn();
         renderWithProviders(
         {children : <Order />,
             createOrder: mockCreateOrder
@@ -33,26 +33,26 @@ describe("<Order>", () => {
 
         await waitFor(() =>
             expect(mockCreateOrder).toHaveBeenCalledWith(expectedPizza)
-        )
-    })
+        );
+    });
 
-    it("should submit custom order", async () => {
-        const expectedPizza = customPizza("Thin", "Pepperoni", "XL")
-        const mockCreateOrder = jest.fn()
+    it('should submit custom order', async () => {
+        const expectedPizza = customPizza('Thin', 'Pepperoni', 'XL');
+        const mockCreateOrder = jest.fn();
         renderWithProviders(
             {children : <Order />,
                 createOrder: mockCreateOrder
             });
 
-        setField("crust", "Thin");
-        setField("flavor", "Pepperoni");
-        setField("size", "XL");
+        setField('crust', 'Thin');
+        setField('flavor', 'Pepperoni');
+        setField('size', 'XL');
 
         clickButton('Submit order');
 
         await waitFor(() =>
             expect(mockCreateOrder).toHaveBeenCalledWith(expectedPizza)
-        )
-    })
+        );
+    });
 
 });

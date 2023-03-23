@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {Order, Pizza} from "../types";
+import {Order, Pizza} from '../types';
 
 const baseURL = 'https://pizza-api-app.herokuapp.com/api/orders';
 
@@ -15,6 +15,6 @@ export function createOrderForTable(pizza: Pizza, tableNumber: number, token: st
 
 export async function deleteOrderById(orderId: string, token: string){
     const url = `${baseURL}/${orderId}`;
-    const headers = {'authorization': `Bearer ${token}`}
-    return axios.delete(url,{headers: headers})
+    const headers = {'authorization': `Bearer ${token}`};
+    return axios.delete(url,{headers: headers});
 }
