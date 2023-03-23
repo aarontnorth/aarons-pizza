@@ -38,7 +38,7 @@ export const OrderCard = ({order, onDelete}: OrderCardProps) => {
                 <Card>
                     <CardContent>
                         <Grid container>
-                            <Grid item xs={8}>
+                            <Grid item xs={12} md={8}>
                                 <Grid container textAlign={'left'}>
                                     {pizzaDetail(`Flavor: ${flavor}`)}
                                     {pizzaDetail(`Size: ${size}`)}
@@ -47,7 +47,7 @@ export const OrderCard = ({order, onDelete}: OrderCardProps) => {
                                     {pizzaDetail(`Ordered at: ${order.Timestamp}`)}
                                 </Grid>
                             </Grid>
-                            <Grid item xs={4} display={'flex'} justifyContent={'right'}>
+                            <Grid item xs={12} md={4} display={'flex'} justifyContent={'right'}>
                                 <Button
                                     variant="contained"
                                     color="error"
