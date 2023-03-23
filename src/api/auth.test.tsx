@@ -25,15 +25,4 @@ describe('Auth Api', () => {
 
         expect(axios.post).toHaveBeenCalledWith('https://pizza-api-app.herokuapp.com/api/auth', mockAuth);
     });
-
-    describe('get', () => {
-        // it('returns body of response', async () => {
-        //     axios.get.mockResolvedValue({ data: 'account' });
-        //
-        //     const result = await AccountApi.get();
-        //
-        //     expect(result).toBe('account');
-        // });
-
-    });
 });

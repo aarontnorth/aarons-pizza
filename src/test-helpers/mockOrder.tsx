@@ -1,7 +1,7 @@
 export const mockOrder = () => {
     return {
-        "Crust": "Regular",
-        "Flavor": "Cheese",
+        "Crust": "REGULAR",
+        "Flavor": "CHEESE",
         "Size": "M",
         "Order_ID": "1234",
         "Table_No": 1,

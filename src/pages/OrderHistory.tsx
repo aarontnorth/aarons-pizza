@@ -1,10 +1,10 @@
-import {mockOrder} from "../test-helpers/mockOrder";
 import {OrderCard} from "../components/OrderCard";
 import {Grid, Typography} from "@mui/material";
+import {useFetchOrders} from "../api/get-orders";
 
 const OrderHistory = () => {
 
-    const fakeOrder = mockOrder();
+    const orders = useFetchOrders();
 
     return (
         <Grid
@@ -14,9 +14,13 @@ const OrderHistory = () => {
             display={"flex"}
             justifyContent={"center"}
         >
-            <Typography sx={{mb: 4}} variant={"h1"}>Order History</Typography>
+            <Grid item xs={12}>
+                <Typography sx={{mb: 4}} variant={"h1"}>Order History</Typography>
+            </Grid>
             <Grid item xs={6}>
-                <OrderCard order={fakeOrder} />
+                {orders && orders.map(order => {
+                    return (<OrderCard key={order.Order_ID} order={order}/>)}
+                )}
             </Grid>
         </Grid>
     )

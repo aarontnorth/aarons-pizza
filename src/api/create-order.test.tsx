@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import {useOrderPizza} from './orders';
+import {useOrderPizza} from './create-order';
 import { renderHook, waitFor } from "@testing-library/react";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {mockPizza} from "../test-helpers/mockPizza";
@@ -39,16 +39,5 @@ describe('Orders Api', () => {
         await waitFor(() => {
             expect(screen.getByText('Thank you for your order!')).toBeInTheDocument();
         });
-    });
-
-    describe('get', () => {
-        // it('returns body of response', async () => {
-        //     axios.get.mockResolvedValue({ data: 'account' });
-        //
-        //     const result = await AccountApi.get();
-        //
-        //     expect(result).toBe('account');
-        // });
-
     });
 });

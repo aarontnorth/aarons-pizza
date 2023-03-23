@@ -5,40 +5,48 @@ interface OrderCardProps {
     order: Order;
 }
 
-type pizzaSize = 'S' | 'M' | 'L' | 'XL';
+type pizzaSize = 'S' | 'M' | 'L' ;
 
 enum pizzaSizesEnum {
     'S' = 'Small',
     'M' = 'Medium',
     'L' = 'Large',
-    'XL' = 'Extra large'
+}
+
+const toSentenceCase = (text: string) => {
+    return text.slice(0,1).toUpperCase() + text.slice(1).toLowerCase();
 }
 
 export const OrderCard = ({order}: OrderCardProps) => {
-    const getPizzaText = () => {
-        const size = pizzaSizesEnum[order.Size as pizzaSize]
-        const flavor = order.Flavor.toLowerCase();
-        const crust = order.Crust.toLowerCase();
-        return `${size} ${flavor} pizza with ${crust} crust`
+    const size = pizzaSizesEnum[order.Size as pizzaSize];
+    const flavor = toSentenceCase(order.Flavor);
+    const crust = toSentenceCase(order.Crust);
+
+    const pizzaDetail = (detail: string) => {
+        return (
+            <Grid item xs={12}>
+                <Typography color="text.secondary" variant={'body1'}>
+                    {detail}
+                </Typography>
+            </Grid>
+        )
     }
 
     return (
-        <Grid container justifyContent={"left"}>
+        <Grid container justifyContent={"left"} sx={{mb: 4}}>
             <Grid item xs={12} display={'flex'} alignItems={'left'}>
                 <Typography>{`Order: ${order.Order_ID}`}</Typography>
             </Grid>
-            <Grid textAlign={'left'}>
+            <Grid item xs={12}>
                 <Card>
                     <CardContent>
-                        <Typography color="text.secondary" variant={'body1'}>
-                            {getPizzaText()}
-                        </Typography>
-                        <Typography color="text.secondary" variant={'body2'}>
-                            {`Table number: ${order.Table_No}`}
-                        </Typography>
-                        <Typography color="text.secondary" variant={'body2'}>
-                            {`Ordered at: ${order.Timestamp}`}
-                        </Typography>
+                        <Grid container textAlign={'left'}>
+                            {pizzaDetail(`Flavor: ${flavor}`)}
+                            {pizzaDetail(`Size: ${size}`)}
+                            {pizzaDetail(`Crust: ${crust}`)}
+                            {pizzaDetail(`Table number: ${order.Table_No}`)}
+                            {pizzaDetail(`Ordered at: ${order.Timestamp}`)}
+                        </Grid>
                     </CardContent>
                 </Card>
             </Grid>

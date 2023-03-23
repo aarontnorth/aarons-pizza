@@ -1,5 +1,5 @@
 import StyledButton from "../components/StyledButton";
-import {useOrderPizza} from "../api/orders";
+import {useOrderPizza} from "../api/create-order";
 import {Field, Form, Formik} from "formik";
 import TextFieldWithHeader from "../components/TextFieldWithHeader";
 import {PageWrapper} from "../components/PageWrapper";

@@ -1,7 +1,7 @@
 import "@testing-library/jest-dom";
 import {fireEvent, screen, waitFor} from "@testing-library/react";
 import Order from "./Order";
-import * as orderPizzaHook from "../api/orders";
+import * as orderPizzaHook from "../api/create-order";
 import {customPizza, mockPizza} from "../test-helpers/mockPizza";
 import userEvent from "@testing-library/user-event";
 import {renderWithProviders} from "../test-helpers/helper";
