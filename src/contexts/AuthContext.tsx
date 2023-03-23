@@ -3,7 +3,13 @@ import {authenticateUser, Credentials} from "../api/auth";
 import {useSessionStorage} from "usehooks-ts";
 import {useMutation} from "@tanstack/react-query";
 
-const AuthContext = createContext({
+interface AuthContextProps {
+  isAuthenticated: boolean;
+  login: (credentials: Credentials) => void;
+  token: string | undefined;
+}
+
+const AuthContext = createContext<AuthContextProps>({
   isAuthenticated: false,
   login: (credentials: Credentials) => {},
   token: ''
@@ -14,8 +20,8 @@ type tokenResponse = {
 }
 
 export const AuthProvider = ({ children }: any) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [token, setToken] = useSessionStorage('token', '')
+  const [token, setToken] = useSessionStorage<string | undefined>('token', undefined)
+  const [isAuthenticated, setIsAuthenticated] = useState(token !== undefined);
 
   const authMutation = useMutation({
     mutationFn: async (credentials: Credentials) => {
@@ -24,12 +30,12 @@ export const AuthProvider = ({ children }: any) => {
     onSuccess: (data) => {
       const tokenResponse = data as tokenResponse
       setToken(tokenResponse.access_token);
+      setIsAuthenticated(true);
     }
   })
 
   const login = (credentials: Credentials) => {
     authMutation.mutate(credentials)
-    setIsAuthenticated(true);
   }
 
   // eslint-disable-next-line react-hooks/exhaustive-deps

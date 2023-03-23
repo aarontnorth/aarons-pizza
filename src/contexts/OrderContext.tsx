@@ -27,7 +27,7 @@ export const OrderProvider = ({ children }: any) => {
 
   const { data } = useQuery({
     queryKey: ['fetch-orders'],
-    queryFn: async () => {return await getOrders(auth.token)
+    queryFn: async () => {return await getOrders(auth.token!!)
         .then(response => {
       return response.data
     });
@@ -36,7 +36,7 @@ export const OrderProvider = ({ children }: any) => {
 
   const createOrderMutation = useMutation( {
     mutationFn: async (pizza: Pizza) => {
-      return await createOrderForTable(pizza, currentTable, auth.token);
+      return await createOrderForTable(pizza, currentTable, auth.token!!);
     },
     onSuccess: () => {
       incrementTable();
@@ -51,7 +51,7 @@ export const OrderProvider = ({ children }: any) => {
   const deleteMutation = useMutation({
         mutationFn:
             async (orderId: string) => {
-              return await deleteOrderById(orderId, auth.token);
+              return await deleteOrderById(orderId, auth.token!!);
             },
         onSuccess: () => {
           queryClient.invalidateQueries({ queryKey: ['fetch-orders'] })
