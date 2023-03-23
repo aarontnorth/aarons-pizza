@@ -1,32 +1,50 @@
-import {createContext, useContext} from "react";
-import {useMutation} from "@tanstack/react-query";
+import {createContext, useContext, useEffect, useState} from "react";
+import {useMutation, useQuery} from "@tanstack/react-query";
 import authContext from "../contexts/AuthContext";
-import {deleteOrderById} from "../api/orders";
+import {deleteOrderById, getOrders} from "../api/orders";
+import {Order} from "../types";
 
-const OrderContext = createContext({
+interface ContextProps {
+  orders: Order[];
+  deleteOrder: (orderId: string) => void;
+}
+
+const OrderContext = createContext<ContextProps>({
+  orders: [],
   deleteOrder: (orderId: string) => {},
 });
 
-export interface deleteOrderInfo {
-  token: string,
-  orderId: string,
-}
-
 export const OrderProvider = ({ children }: any) => {
+  const [orders, setOrders] = useState<Order[]>([])
   const auth = useContext(authContext)
 
   const deleteMutation = useMutation(
-      async ({token, orderId}: deleteOrderInfo) => {
-        return await deleteOrderById(orderId, token);
+      async (orderId: string) => {
+        return await deleteOrderById(orderId, auth.token);
       },
   )
 
+  const { data } = useQuery({
+    queryKey: ['fetch-orders'],
+    queryFn: async () => {return await getOrders(auth.token)
+        .then(response => {
+      return response.data
+    });
+    }
+  })
+
   const deleteOrder = (orderId: string) => {
-    deleteMutation.mutate({orderId: orderId, token: auth.token});
+    deleteMutation.mutate(orderId);
   }
 
+  useEffect(() => {
+    if(data){
+      setOrders(data)
+    }
+  },[data])
+
   return (
-    <OrderContext.Provider value={{ deleteOrder }}>
+    <OrderContext.Provider value={{ orders, deleteOrder }}>
       {children}
     </OrderContext.Provider>
   );

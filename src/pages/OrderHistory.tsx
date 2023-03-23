@@ -1,12 +1,10 @@
 import {OrderCard} from "../components/OrderCard";
 import {Grid, Typography} from "@mui/material";
-import {useFetchOrders} from "../api/get-orders";
 import {useContext} from "react";
 import OrderContext from "../contexts/OrderContext";
 
 const OrderHistory = () => {
-    const orders = useFetchOrders();
-    const {deleteOrder} = useContext(OrderContext);
+    const {deleteOrder, orders} = useContext(OrderContext);
 
     const handleDelete = (orderId: string) => {
         deleteOrder(orderId);
