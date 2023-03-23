@@ -35,7 +35,10 @@ export const OrderProvider = ({ children }: any) => {
         return response.data;
       });
     },
-    onSuccess: (data) => {setOrders(data);}
+    onSuccess: (data) => {setOrders(data);},
+    onError: (error) => {
+      if(isExpiredToken(error)){auth.logout();}
+    }
   });
 
   const createOrderMutation = useMutation( {
@@ -45,6 +48,9 @@ export const OrderProvider = ({ children }: any) => {
     onSuccess: () => {
       incrementTable();
       snack.handleSetAlert('Thank you for your order!');
+    },
+    onError: (error) => {
+      if(isExpiredToken(error)){auth.logout();}
     }
   });
 
@@ -59,12 +65,19 @@ export const OrderProvider = ({ children }: any) => {
             },
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: ['fetch-orders']});
+    },
+    onError: (error) => {
+      if(isExpiredToken(error)){auth.logout();}
     }
   }
   );
 
   const deleteOrder = (orderId: string) => {
     deleteMutation.mutate(orderId);
+  };
+
+  const isExpiredToken = (error: string) => {
+    return error.includes('Token has expired');
   };
 
   return (
