@@ -1,6 +1,6 @@
 import React from 'react';
 import {createContext, useState} from 'react';
-import { Snackbar } from '@mui/material';
+import {Alert, Snackbar} from '@mui/material';
 
 const SnackBarContext = createContext({
   // eslint-disable-next-line
@@ -20,26 +20,21 @@ export function SnackBarProvider({ children }) {
 
   const handleClose = () => {
     setOpen(false);
-    setAlert('');
   };
-
-  // const closeButton = () => {
-  //     return (
-  //         <IconButton
-  //             size="small"
-  //             aria-label="close"
-  //             color="inherit"
-  //             onClick={handleClose}
-  //         >
-  //             <CloseIcon fontSize="small" />
-  //         </IconButton>
-  //     )
-  // }
 
   return (
     <SnackBarContext.Provider value={{ handleSetAlert }}>
       {children}
-      {<Snackbar onClose={handleClose} open={open} message={alert} />}
+      {<Snackbar
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        onClose={handleClose}
+        open={open}
+      >
+        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+          {alert}
+        </Alert>
+      </Snackbar>
+      }
     </SnackBarContext.Provider>
   );
 }
