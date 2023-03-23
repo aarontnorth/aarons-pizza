@@ -16,6 +16,7 @@ interface props {
     createOrder?: (pizza: Pizza) => {};
     search?: (searchTerm: string) => {};
     resetSearch?: () => {};
+    logout?: () => {};
 }
 
 export const setField = (fieldName: string, newValue: string) => {
@@ -32,7 +33,7 @@ export const clickButton = (buttonName: string) => {
 export const mockQueryClient = new QueryClient();
 
 export const renderWithProviders = (
-  {children, isAuthenticated, login, deleteOrder, createOrder, search, resetSearch}: props
+  {children, isAuthenticated, login, deleteOrder, createOrder, search, resetSearch, logout}: props
 ) => {
   return render(
 
@@ -41,7 +42,8 @@ export const renderWithProviders = (
         value={{
           isAuthenticated: isAuthenticated ?? false,
           login: login ?? jest.fn(),
-          token: ''
+          token: '',
+          logout: logout ?? jest.fn(),
         }}>
         <OrderContext.Provider
           value={{

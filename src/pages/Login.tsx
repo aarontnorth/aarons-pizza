@@ -1,16 +1,16 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Grid} from '@mui/material';
 import TextFieldWithError from '../components/TextFieldWithError';
 import {Field, Form, Formik} from 'formik';
 import StyledButton from '../components/StyledButton';
 import authContext from '../contexts/AuthContext';
-import {useContext, useEffect} from 'react';
-import {useNavigate} from 'react-router-dom';
+import {useContext} from 'react';
 import {PageWrapper} from '../components/PageWrapper';
 import * as Yup from 'yup';
+import {useNavigate} from 'react-router-dom';
 
 const Login = () => {
-  const {isAuthenticated, login} = useContext(authContext);
+  const {isAuthenticated, login, logout} = useContext(authContext);
   const navigate = useNavigate();
 
   const loginSchema = Yup.object().shape({
@@ -23,9 +23,17 @@ const Login = () => {
       navigate('/');
     }
     // eslint-disable-next-line
-    },[isAuthenticated])
+  },[isAuthenticated])
 
-  return (
+  const Logout = () => {
+    return (
+      <PageWrapper heading={'Hello there!'} subheading={'Would you like to log out?'}>
+        <StyledButton onClick={logout} sx={{mt: 4}}>Log out</StyledButton>
+      </PageWrapper>
+    );
+  };
+
+  const Login = () => (
     <PageWrapper heading={'Hello there!'} subheading={'Please sign in'}>
       <Grid item xs={4} sx={{mt: 4}}>
         <Formik
@@ -59,6 +67,8 @@ const Login = () => {
       </Grid>
     </PageWrapper>
   );
+
+  return (isAuthenticated ? <Logout /> : <Login />);
 };
 
 export default Login;

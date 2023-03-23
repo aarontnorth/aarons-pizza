@@ -29,8 +29,8 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <SnackBarProvider>
+      <SnackBarProvider>
+        <AuthProvider>
           <OrderProvider>
             <SearchProvider>
               <ThemeProvider theme={theme}>
@@ -58,8 +58,8 @@ function App() {
               </ThemeProvider>
             </SearchProvider>
           </OrderProvider>
-        </SnackBarProvider>
-      </AuthProvider>
+        </AuthProvider>
+      </SnackBarProvider>
     </QueryClientProvider>
   );
 }

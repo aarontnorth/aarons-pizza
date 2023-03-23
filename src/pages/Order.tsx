@@ -6,7 +6,7 @@ import {PageWrapper} from '../components/PageWrapper';
 import {useContext} from 'react';
 import OrderContext from '../contexts/OrderContext';
 import * as Yup from 'yup';
-import {PizzaBreadcrumbs} from '../components/PizzaBreadcrumbs';
+import {Header} from '../components/Header';
 
 const Order = () => {
   const {createOrder} = useContext(OrderContext);
@@ -29,7 +29,7 @@ const Order = () => {
 
   return (
     <>
-      <PizzaBreadcrumbs path={'home/order'} />
+      <Header path={'home/order'} />
       <PageWrapper heading={'Order a pie!'} subheading={'Customize your order'}>
         <Formik
           validationSchema={orderSchema}

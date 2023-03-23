@@ -7,7 +7,7 @@ import TextFieldWithError from '../components/TextFieldWithError';
 import {Field, Form, Formik} from 'formik';
 import StyledButton from '../components/StyledButton';
 import SearchContext from '../contexts/SearchContext';
-import {PizzaBreadcrumbs} from '../components/PizzaBreadcrumbs';
+import {Header} from '../components/Header';
 
 const OrderHistory = () => {
   const {deleteOrder} = useContext(OrderContext);
@@ -20,7 +20,7 @@ const OrderHistory = () => {
 
   return (
     <>
-      <PizzaBreadcrumbs path={'home/orders'}/>
+      <Header path={'home/orders'}/>
       <Grid
         container
         sx={{mt:5}}
