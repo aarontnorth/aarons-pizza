@@ -1,11 +1,11 @@
-import React from 'react';
-import {createContext, useContext, useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
+import {createContext, useContext, useState} from 'react';
 import OrderContext from '../contexts/OrderContext';
 import lunr from 'lunr';
 import {Order} from '../types';
 
 interface ContextProps {
-  filteredOrders: Order[];
+  filteredOrders: Order[] | undefined;
   search: (searchTerm: string) => void;
 }
 
@@ -17,11 +17,11 @@ const SearchContext = createContext<ContextProps>({
 
 export const SearchProvider = ({ children }: any) => {
   const {orders} = useContext(OrderContext);
-  const [filteredOrders, setFilteredOrders] = useState<Order[]>(orders);
+  const [filteredOrders, setFilteredOrders] = useState<Order[]>();
 
   // eslint-disable-next-line
   useEffect(() => {
-    setFilteredOrders(orders);
+    !filteredOrders && setFilteredOrders(orders);
   });
 
   const idx = lunr(function () {
