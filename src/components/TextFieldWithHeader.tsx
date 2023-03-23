@@ -1,22 +1,44 @@
-import {TextField, Grid} from "@mui/material";
+import {TextField, Grid, styled} from "@mui/material";
 
 interface TextFieldProps {
     label: string;
     field?: JSX.IntrinsicAttributes
 }
 
+const StyledTextField = styled(TextField)({
+    '& label.Mui-focused': {
+        color: 'white',
+    },
+    '& .MuiInput-underline:after': {
+        borderBottomColor: 'white',
+    },
+    '& .MuiInputLabel-root': {
+        color: 'white',
+    },
+    '& .MuiOutlinedInput-input': {
+        color: 'white',
+    },
+    '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+            borderColor: 'white',
+        },
+        '&:hover fieldset': {
+            borderColor: 'white',
+        },
+        '&.Mui-focused fieldset': {
+            borderColor: 'white',
+        },
+    },
+});
+
 const TextFieldWithHeader = ({label, field}: TextFieldProps ) => {
     return (
         <Grid container direction={'column'} sx={{mb: 4}}>
-            {/*<Typography>{label}</Typography>*/}
-            <TextField
+            <StyledTextField
                 {...field}
                 label={label}
                 type={'input'}
                 name={label}
-                variant={"filled"}
-                color={"secondary"}
-                sx={{color: "white"}}
             />
         </Grid>
     )

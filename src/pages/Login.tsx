@@ -28,7 +28,7 @@ const Login = () => {
                         actions.setSubmitting(false);
                     }}
                 >
-                    <Form>
+                    <Form autoComplete={"off"}>
                         <Field component={TextFieldWithHeader} name="username" label={"username"} />
                         <Field component={TextFieldWithHeader} name="password" label={"password"} />
                         <StyledButton type="submit">Sign in</StyledButton>

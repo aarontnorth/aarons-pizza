@@ -16,7 +16,7 @@ import {SearchProvider} from "./contexts/SearchContext";
 const theme = createTheme({
     palette: {
         background: {
-            default: "#3174a7"
+            default: "#054c81"
         },
         text: {
             primary: "#ffffff"

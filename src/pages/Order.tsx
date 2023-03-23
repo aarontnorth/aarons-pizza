@@ -27,7 +27,7 @@ const Order = () => {
                     actions.setSubmitting(false);
                 }}
             >
-                <Form>
+                <Form autoComplete={"off"}>
                     <Field component={TextFieldWithHeader} name="crust" label={"crust"} />
                     <Field component={TextFieldWithHeader} name="flavor" label={"flavor"} />
                     <Field component={TextFieldWithHeader} name="size" label={"size"} />

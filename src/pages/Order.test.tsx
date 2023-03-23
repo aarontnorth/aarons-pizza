@@ -1,8 +1,7 @@
 import "@testing-library/jest-dom";
-import {fireEvent, screen, waitFor} from "@testing-library/react";
+import {screen, waitFor} from "@testing-library/react";
 import Order from "./Order";
 import {customPizza, mockPizza} from "../test-helpers/mockPizza";
-import userEvent from "@testing-library/user-event";
 import {clickButton, renderWithProviders, setField} from "../test-helpers/helper";
 
 import axios from 'axios';

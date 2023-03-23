@@ -1,4 +1,4 @@
-import {createContext, useContext, useState} from "react";
+import {createContext, useContext, useEffect, useState} from "react";
 import OrderContext from "../contexts/OrderContext";
 import lunr from "lunr";
 import {Order} from "../types";
@@ -15,7 +15,12 @@ const SearchContext = createContext<ContextProps>({
 
 export const SearchProvider = ({ children }: any) => {
   const {orders} = useContext(OrderContext);
-  const [filteredOrders, setFilteredOrders] = useState<Order[]>([]);
+  const [filteredOrders, setFilteredOrders] = useState<Order[]>(orders);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    setFilteredOrders(orders);
+  })
 
   const idx = lunr(function () {
     this.ref('Order_ID')
