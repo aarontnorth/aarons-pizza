@@ -4,12 +4,7 @@ import {useContext} from "react";
 import authContext from "../contexts/AuthContext";
 import useOrderSessionStorage from "../hooks/useOrderSessionStorage";
 import snackBarContext from "../contexts/SnackBarContext";
-
-export interface Pizza {
-    Crust: string;
-    Flavor: string;
-    Size: string;
-}
+import {Pizza} from "../types";
 
 export function useOrderPizza() {
     const auth = useContext(authContext);
