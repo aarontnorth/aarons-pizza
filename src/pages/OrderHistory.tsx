@@ -25,7 +25,7 @@ const OrderHistory = () => {
         >
             <Grid item xs={12}>
                 <Typography sx={{mb: 4}} variant={"h1"}>Order History</Typography>
-                <Typography sx={{mb: 4}} variant={"h2"}>Filter your orders</Typography>
+                <Typography variant={"h2"}>Filter your orders</Typography>
             </Grid>
             <Grid item xs={6}>
                 <Formik
@@ -46,9 +46,11 @@ const OrderHistory = () => {
                         </Grid>
                     </Form>
                 </Formik>
-                {filteredOrders && filteredOrders.map(order => {
-                    return (<OrderCard key={order.Order_ID} order={order} onDelete={handleDelete}/>)}
-                )}
+                <Grid sx={{mt:6}}>
+                    {filteredOrders && filteredOrders.map(order => {
+                        return (<OrderCard key={order.Order_ID} order={order} onDelete={handleDelete}/>)}
+                    )}
+                </Grid>
             </Grid>
         </Grid>
     )
