@@ -5,6 +5,7 @@ import StyledButton from "../components/StyledButton";
 import authContext from "../contexts/AuthContext";
 import {useContext, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
+import {PageWrapper} from "../components/PageWrapper";
 
 const Login = () => {
     const {isAuthenticated, login} = useContext(authContext);
@@ -18,14 +19,8 @@ const Login = () => {
     },[isAuthenticated])
 
     return (
-        <Grid container sx={{mt: 20}} justifyContent={"center"}>
-            <Grid item xs={12} sx={{textAlign: "center"}}>
-                <Typography variant={"h1"}>Hello there!</Typography>
-            </Grid>
-            <Grid item xs={12} sx={{textAlign: "center"}}>
-                <Typography variant={"h2"}>Please sign in</Typography>
-            </Grid>
-            <Grid container item xs={4} sx={{mt: 4}} direction={"column"}>
+        <PageWrapper heading={"Hello there!"} subheading={"Please sign in"}>
+            <Grid item xs={4} sx={{mt: 4}}>
                 <Formik
                     initialValues={{ username: '', password: '' }}
                     onSubmit={(values, actions) => {
@@ -40,7 +35,7 @@ const Login = () => {
                     </Form>
                 </Formik>
             </Grid>
-        </Grid>
+        </PageWrapper>
     )
 }
 
