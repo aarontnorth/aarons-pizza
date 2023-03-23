@@ -25,10 +25,16 @@ describe('<OrderHistory>', () => {
 
   it('should delete order', async () => {
     const mockDelete = jest.fn();
-    renderWithProviders({children: <OrderHistory />, deleteOrder: mockDelete});
+    const mockResetSearch = jest.fn();
+    renderWithProviders({
+      children: <OrderHistory />,
+      deleteOrder: mockDelete,
+      resetSearch: mockResetSearch
+    });
     clickButton('delete order 1234');
     await waitFor(() => {
       expect(mockDelete).toHaveBeenCalledWith('1234');
+      expect(mockResetSearch).toHaveBeenCalled();
     });
   });
 

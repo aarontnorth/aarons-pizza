@@ -1,5 +1,5 @@
 import React from 'react';
-import {createContext, useContext, useEffect, useState} from 'react';
+import {createContext, useContext, useState} from 'react';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import authContext from '../contexts/AuthContext';
 import {createOrderForTable, deleteOrderById, getOrders} from '../api/orders';
@@ -28,13 +28,14 @@ export const OrderProvider = ({ children }: any) => {
   const snack = useContext(snackBarContext);
   const auth = useContext(authContext);
 
-  const { data } = useQuery({
+  useQuery({
     queryKey: ['fetch-orders'],
     queryFn: async () => {return await getOrders(auth.token!!)
       .then(response => {
         return response.data;
       });
-    }
+    },
+    onSuccess: (data) => {setOrders(data);}
   });
 
   const createOrderMutation = useMutation( {
@@ -57,7 +58,7 @@ export const OrderProvider = ({ children }: any) => {
               return await deleteOrderById(orderId, auth.token!!);
             },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['fetch-orders'] });
+      queryClient.invalidateQueries({queryKey: ['fetch-orders']});
     }
   }
   );
@@ -65,12 +66,6 @@ export const OrderProvider = ({ children }: any) => {
   const deleteOrder = (orderId: string) => {
     deleteMutation.mutate(orderId);
   };
-
-  useEffect(() => {
-    if(data){
-      setOrders(data);
-    }
-  },[data]);
 
   return (
     <OrderContext.Provider value={{ orders, createOrder, deleteOrder }}>

@@ -15,6 +15,7 @@ interface props {
     deleteOrder?: (orderId: string) => {};
     createOrder?: (pizza: Pizza) => {};
     search?: (searchTerm: string) => {};
+    resetSearch?: () => {};
 }
 
 export const setField = (fieldName: string, newValue: string) => {
@@ -30,18 +31,30 @@ export const clickButton = (buttonName: string) => {
 
 export const mockQueryClient = new QueryClient();
 
-export const renderWithProviders = ({children, isAuthenticated, login, deleteOrder, createOrder, search}: props) => {
+export const renderWithProviders = (
+  {children, isAuthenticated, login, deleteOrder, createOrder, search, resetSearch}: props
+) => {
   return render(
 
     <QueryClientProvider client={mockQueryClient}>
-      <AuthContext.Provider value={{isAuthenticated: isAuthenticated ?? false, login: login ?? jest.fn(), token: ''}}>
+      <AuthContext.Provider
+        value={{
+          isAuthenticated: isAuthenticated ?? false,
+          login: login ?? jest.fn(),
+          token: ''
+        }}>
         <OrderContext.Provider
           value={{
             orders: [mockOrder1234(), mockOrder5678()],
             deleteOrder: deleteOrder ?? jest.fn(),
             createOrder: createOrder ?? jest.fn()
           }}>
-          <SearchContext.Provider value={{filteredOrders: [mockOrder1234(), mockOrder5678()], search: search ?? jest.fn()}}>
+          <SearchContext.Provider
+            value={{
+              filteredOrders: [mockOrder1234(), mockOrder5678()],
+              search: search ?? jest.fn(),
+              resetSearch: resetSearch ?? jest.fn()
+            }}>
             {children}
           </SearchContext.Provider>
         </OrderContext.Provider>

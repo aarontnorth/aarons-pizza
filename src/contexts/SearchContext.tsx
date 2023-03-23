@@ -7,22 +7,28 @@ import {Order} from '../types';
 interface ContextProps {
   filteredOrders: Order[] | undefined;
   search: (searchTerm: string) => void;
+  resetSearch: () => void;
 }
 
 const SearchContext = createContext<ContextProps>({
   filteredOrders: [],
   // eslint-disable-next-line
   search: (searchTerm: string) => {},
+  resetSearch: () => {},
 });
 
 export const SearchProvider = ({ children }: any) => {
   const {orders} = useContext(OrderContext);
   const [filteredOrders, setFilteredOrders] = useState<Order[]>();
 
+  const isEmpty = (orderList: Order[] | undefined) => {
+    return orderList === undefined || orderList.length === 0;
+  };
+
   // eslint-disable-next-line
   useEffect(() => {
-    !filteredOrders && setFilteredOrders(orders);
-  });
+    isEmpty(filteredOrders) && setFilteredOrders(orders);
+  }, [orders]);
 
   const idx = lunr(function () {
     this.ref('Order_ID');
@@ -39,6 +45,10 @@ export const SearchProvider = ({ children }: any) => {
     }, this);
   });
 
+  const resetSearch = () => {
+    setFilteredOrders([]);
+  };
+
   const search = (searchTerm: string) => {
     const isOrderInResults = (order: Order) => {
       return orderIdsFromResults.includes(order.Order_ID.toString());
@@ -49,7 +59,7 @@ export const SearchProvider = ({ children }: any) => {
   };
 
   return (
-    <SearchContext.Provider value={{ filteredOrders , search }}>
+    <SearchContext.Provider value={{ filteredOrders , search, resetSearch }}>
       {children}
     </SearchContext.Provider>
   );

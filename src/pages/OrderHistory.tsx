@@ -10,10 +10,11 @@ import SearchContext from '../contexts/SearchContext';
 
 const OrderHistory = () => {
   const {deleteOrder} = useContext(OrderContext);
-  const {filteredOrders, search} = useContext(SearchContext);
+  const {filteredOrders, search, resetSearch} = useContext(SearchContext);
 
   const handleDelete = (orderId: string) => {
     deleteOrder(orderId);
+    resetSearch();
   };
 
   return (
