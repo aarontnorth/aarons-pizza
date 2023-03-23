@@ -11,6 +11,12 @@ describe('<PizzaBreadcrumbs>', () => {
     expect(screen.getByText('Order')).toBeInTheDocument();
   });
 
+  it('should render home typography', () => {
+    render(<PizzaBreadcrumbs path={'home'}/>);
+    expect(screen.queryByRole('link', {name: 'Home'})).toBeNull();
+    expect(screen.getByText('Home')).toBeInTheDocument();
+  });
+
   it('should redirect to home page',async () => {
     render(<PizzaBreadcrumbs path={'home/order'}/>);
     const homeCrumb = screen.getByRole('link', {name: 'Home'});
