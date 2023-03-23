@@ -1,5 +1,5 @@
-import {Grid, Typography} from "@mui/material";
-import TextFieldWithHeader from "../components/TextFieldWithHeader";
+import {Grid} from "@mui/material";
+import TextFieldWithError from "../components/TextFieldWithError";
 import {Field, Form, Formik} from "formik";
 import StyledButton from "../components/StyledButton";
 import authContext from "../contexts/AuthContext";
@@ -16,12 +16,6 @@ const Login = () => {
         username: Yup.string().required('Username is required'),
         password: Yup.string().required('Password is required'),
     });
-
-    const errorText = (errorText: string) => {
-        return (
-            <Typography sx={{color: "red"}}>{errorText}</Typography>
-        );
-    }
 
     useEffect(() => {
         if(isAuthenticated){
@@ -43,12 +37,20 @@ const Login = () => {
                 >
                     {({ errors, touched }) => (
                         <Form autoComplete={"off"}>
-                            <Field component={TextFieldWithHeader} name="username" label={"username"} />
-                            {errors.username && touched.username && errorText(errors.username)}
-
-                            <Field component={TextFieldWithHeader} name="password" label={"password"} />
-                            {errors.password && touched.password && errorText(errors.password)}
-
+                            <Field
+                                component={TextFieldWithError}
+                                name="username"
+                                label={"username"}
+                                hasError={errors.username && touched.username}
+                                errorText={errors.username}
+                            />
+                            <Field
+                                component={TextFieldWithError}
+                                name="password"
+                                label={"password"}
+                                hasError={errors.password && touched.password}
+                                errorText={errors.password}
+                            />
                             <StyledButton type="submit" sx={{mt: 4}}>Sign in</StyledButton>
                         </Form>
                     )}

@@ -2,7 +2,7 @@ import {OrderCard} from "../components/OrderCard";
 import {Grid, Typography} from "@mui/material";
 import {useContext} from "react";
 import OrderContext from "../contexts/OrderContext";
-import TextFieldWithHeader from "../components/TextFieldWithHeader";
+import TextFieldWithError from "../components/TextFieldWithError";
 import {Field, Form, Formik} from "formik";
 import StyledButton from "../components/StyledButton";
 import SearchContext from "../contexts/SearchContext";
@@ -38,7 +38,7 @@ const OrderHistory = () => {
                     <Form autoComplete={"off"}>
                         <Grid container sx={{alignItems: 'baseline'}} display={"flex"}>
                             <Grid item xs={10}>
-                                <Field component={TextFieldWithHeader} name="search" label={"search"} />
+                                <Field component={TextFieldWithError} name="search" label={"search"} />
                             </Grid>
                             <Grid item xs={2}>
                                 <StyledButton type="submit">Search</StyledButton>

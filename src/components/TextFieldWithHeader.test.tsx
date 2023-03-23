@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom";
 import {render, screen} from "@testing-library/react";
-import TextFieldWithHeader from "../components/TextFieldWithHeader";
+import TextFieldWithError from "../components/TextFieldWithError";
 
 const mockNavigate = jest.fn();
 jest.mock('react-router-dom', () => ({
@@ -10,7 +10,17 @@ jest.mock('react-router-dom', () => ({
 
 describe("<TextFieldWithHeader>", () => {
     it("should render heading", () => {
-        render(<TextFieldWithHeader label={"mock label"}/>)
+        render(<TextFieldWithError label={"mock label"} hasError={false}/>)
         expect(screen.getAllByText("mock label")).toBeDefined()
     });
+
+    it("should not render error if hasError is false", () => {
+        render(<TextFieldWithError label={"mock label"} hasError={false} errorText={"no error"}/>)
+        expect(screen.queryByText("no error")).toBeNull();
+    })
+
+    it("should render error", () => {
+        render(<TextFieldWithError label={"mock label"} hasError={true} errorText={"error!"}/>)
+        expect(screen.getByText("error!")).toBeInTheDocument();
+    })
 });

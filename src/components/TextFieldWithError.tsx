@@ -1,8 +1,10 @@
-import {TextField, Grid, styled} from "@mui/material";
+import {TextField, Grid, styled, Typography} from "@mui/material";
 
 interface TextFieldProps {
     label: string;
-    field?: JSX.IntrinsicAttributes
+    field?: JSX.IntrinsicAttributes;
+    hasError: boolean;
+    errorText?: string;
 }
 
 const StyledTextField = styled(TextField)({
@@ -31,7 +33,7 @@ const StyledTextField = styled(TextField)({
     },
 });
 
-const TextFieldWithHeader = ({label, field}: TextFieldProps ) => {
+const TextFieldWithError = ({label, field, hasError, errorText}: TextFieldProps ) => {
     return (
         <Grid container direction={'column'} sx={{mt: 4}}>
             <StyledTextField
@@ -40,8 +42,9 @@ const TextFieldWithHeader = ({label, field}: TextFieldProps ) => {
                 type={'input'}
                 name={label}
             />
+            {hasError && <Typography sx={{color: "red"}}>{errorText}</Typography>}
         </Grid>
     )
 }
 
-export default TextFieldWithHeader
+export default TextFieldWithError

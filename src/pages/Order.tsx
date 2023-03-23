@@ -1,6 +1,6 @@
 import StyledButton from "../components/StyledButton";
 import {Field, Form, Formik} from "formik";
-import TextFieldWithHeader from "../components/TextFieldWithHeader";
+import TextFieldWithError from "../components/TextFieldWithError";
 import {PageWrapper} from "../components/PageWrapper";
 import {useContext} from "react";
 import OrderContext from "../contexts/OrderContext";
@@ -28,9 +28,9 @@ const Order = () => {
                 }}
             >
                 <Form autoComplete={"off"}>
-                    <Field component={TextFieldWithHeader} name="crust" label={"crust"} />
-                    <Field component={TextFieldWithHeader} name="flavor" label={"flavor"} />
-                    <Field component={TextFieldWithHeader} name="size" label={"size"} />
+                    <Field component={TextFieldWithError} name="crust" label={"crust"} />
+                    <Field component={TextFieldWithError} name="flavor" label={"flavor"} />
+                    <Field component={TextFieldWithError} name="size" label={"size"} />
                     <StyledButton sx={{mt: 4, width: 'fit-content'}} type={'submit'}>
                         Submit order
                     </StyledButton>
