@@ -25,8 +25,8 @@ describe("<OrderCard>", () => {
         const mockDelete = jest.fn();
         render(<OrderCard order={mockOrder()} onDelete={mockDelete}/>)
 
-        const deleteButton = screen.getByRole('button', {name: 'Delete'});
+        const deleteButton = screen.getByRole('button', {name: 'delete order 1234'});
         userEvent.click(deleteButton);
-        expect(mockDelete).toHaveBeenCalled();
+        expect(mockDelete).toHaveBeenCalledWith('1234');
     })
 });

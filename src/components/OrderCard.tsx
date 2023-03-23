@@ -3,7 +3,7 @@ import {Order} from "../types";
 
 interface OrderCardProps {
     order: Order;
-    onDelete: () => void;
+    onDelete: (orderId: string) => void;
 }
 
 type pizzaSize = 'S' | 'M' | 'L' ;
@@ -22,6 +22,10 @@ export const OrderCard = ({order, onDelete}: OrderCardProps) => {
     const size = pizzaSizesEnum[order.Size as pizzaSize];
     const flavor = toSentenceCase(order.Flavor);
     const crust = toSentenceCase(order.Crust);
+
+    const handleClick = () => {
+        onDelete(order.Order_ID);
+    }
 
     const pizzaDetail = (detail: string) => {
         return (
@@ -56,7 +60,8 @@ export const OrderCard = ({order, onDelete}: OrderCardProps) => {
                                     variant="contained"
                                     color="error"
                                     sx={{height: 'fit-content'}}
-                                    onClick={onDelete}
+                                    onClick={handleClick}
+                                    aria-label={`delete order ${order.Order_ID}`}
                                 >
                                     Delete
                                 </Button>

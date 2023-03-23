@@ -10,6 +10,7 @@ import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {AuthProvider} from "./contexts/AuthContext";
 import {RedirectRoute} from "./components/RedirectRoute";
 import {SnackBarProvider} from "./contexts/SnackBarContext";
+import {OrderProvider} from "./contexts/OrderContext";
 
 const theme = createTheme({
     palette: {
@@ -29,7 +30,8 @@ function App() {
       <QueryClientProvider client={queryClient}>
           <AuthProvider>
               <SnackBarProvider>
-                  <ThemeProvider theme={theme}>
+                  <OrderProvider>
+                   <ThemeProvider theme={theme}>
                       <CssBaseline />
                       <BrowserRouter>
                         <Routes>
@@ -51,7 +53,8 @@ function App() {
                             />
                         </Routes>
                       </BrowserRouter>
-                  </ThemeProvider>
+                   </ThemeProvider>
+                  </OrderProvider>
               </SnackBarProvider>
           </AuthProvider>
       </QueryClientProvider>
