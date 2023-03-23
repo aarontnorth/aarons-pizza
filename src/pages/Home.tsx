@@ -5,24 +5,24 @@ import StyledButton from '../components/StyledButton';
 import {PageWrapper} from '../components/PageWrapper';
 
 const Home = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    return (
-        <PageWrapper heading={'Hello there!'} subheading={'Welcome to Aaron\'s Pizza'}>
-            <Grid container item xs={6} sx={{mt: 8}}>
-                <Grid item xs={12} md={6} justifyContent={'center'} display={'flex'} sx={{mt: 4}}>
-                    <StyledButton onClick={() => {navigate('/order');}}>
+  return (
+    <PageWrapper heading={'Hello there!'} subheading={'Welcome to Aaron\'s Pizza'}>
+      <Grid container item xs={6} sx={{mt: 8}}>
+        <Grid item xs={12} md={6} justifyContent={'center'} display={'flex'} sx={{mt: 4}}>
+          <StyledButton onClick={() => {navigate('/order');}}>
                         Place an order
-                    </StyledButton>
-                </Grid>
-                <Grid item xs={12} md={6} justifyContent={'center'} display={'flex'} sx={{mt: 4}}>
-                    <StyledButton onClick={() => {navigate('/order-history');}} >
+          </StyledButton>
+        </Grid>
+        <Grid item xs={12} md={6} justifyContent={'center'} display={'flex'} sx={{mt: 4}}>
+          <StyledButton onClick={() => {navigate('/order-history');}} >
                         View order history
-                    </StyledButton>
-                </Grid>
-            </Grid>
-        </PageWrapper>
-    );
+          </StyledButton>
+        </Grid>
+      </Grid>
+    </PageWrapper>
+  );
 };
 
 export default Home;

@@ -14,53 +14,53 @@ import {OrderProvider} from './contexts/OrderContext';
 import {SearchProvider} from './contexts/SearchContext';
 
 const theme = createTheme({
-    palette: {
-        background: {
-            default: '#054c81'
-        },
-        text: {
-            primary: '#ffffff'
-        }
+  palette: {
+    background: {
+      default: '#054c81'
     },
+    text: {
+      primary: '#ffffff'
+    }
+  },
 });
 
 function App() {
-    const queryClient = new QueryClient();
+  const queryClient = new QueryClient();
 
   return (
-      <QueryClientProvider client={queryClient}>
-          <AuthProvider>
-              <SnackBarProvider>
-                  <OrderProvider>
-                      <SearchProvider>
-                   <ThemeProvider theme={theme}>
-                      <CssBaseline />
-                      <BrowserRouter>
-                        <Routes>
-                            <Route path="/login" element={<Login />} />
-                            <Route path="/" element={
-                                <RedirectRoute>
-                                    <Home />
-                                </RedirectRoute>}
-                            />
-                            <Route path="/order" element={
-                                <RedirectRoute>
-                                    <Order />
-                                </RedirectRoute>}
-                            />
-                            <Route path="/order-history" element={
-                                <RedirectRoute>
-                                    <OrderHistory />
-                                </RedirectRoute>}
-                            />
-                        </Routes>
-                      </BrowserRouter>
-                   </ThemeProvider>
-                      </SearchProvider>
-                  </OrderProvider>
-              </SnackBarProvider>
-          </AuthProvider>
-      </QueryClientProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <SnackBarProvider>
+          <OrderProvider>
+            <SearchProvider>
+              <ThemeProvider theme={theme}>
+                <CssBaseline />
+                <BrowserRouter>
+                  <Routes>
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/" element={
+                      <RedirectRoute>
+                        <Home />
+                      </RedirectRoute>}
+                    />
+                    <Route path="/order" element={
+                      <RedirectRoute>
+                        <Order />
+                      </RedirectRoute>}
+                    />
+                    <Route path="/order-history" element={
+                      <RedirectRoute>
+                        <OrderHistory />
+                      </RedirectRoute>}
+                    />
+                  </Routes>
+                </BrowserRouter>
+              </ThemeProvider>
+            </SearchProvider>
+          </OrderProvider>
+        </SnackBarProvider>
+      </AuthProvider>
+    </QueryClientProvider>
   );
 }
 

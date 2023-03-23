@@ -31,9 +31,9 @@ export const OrderProvider = ({ children }: any) => {
   const { data } = useQuery({
     queryKey: ['fetch-orders'],
     queryFn: async () => {return await getOrders(auth.token!!)
-        .then(response => {
-      return response.data;
-    });
+      .then(response => {
+        return response.data;
+      });
     }
   });
 
@@ -52,14 +52,14 @@ export const OrderProvider = ({ children }: any) => {
   };
 
   const deleteMutation = useMutation({
-        mutationFn:
+    mutationFn:
             async (orderId: string) => {
               return await deleteOrderById(orderId, auth.token!!);
             },
-        onSuccess: () => {
-          queryClient.invalidateQueries({ queryKey: ['fetch-orders'] });
-        }
-      }
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['fetch-orders'] });
+    }
+  }
   );
 
   const deleteOrder = (orderId: string) => {

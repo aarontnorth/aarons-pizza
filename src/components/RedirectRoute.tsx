@@ -5,6 +5,6 @@ import authContext from '../contexts/AuthContext';
 // @ts-ignore
 // eslint-disable-next-line react/prop-types
 export const RedirectRoute = ({children}) => {
-    const {isAuthenticated} = useContext(authContext);
-    return isAuthenticated ? children : <Navigate to="/login" />;
+  const {isAuthenticated} = useContext(authContext);
+  return isAuthenticated ? children : <Navigate to="/login" />;
 };

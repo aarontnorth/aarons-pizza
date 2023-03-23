@@ -6,7 +6,7 @@ const useOrderSessionStorage = () => {
     useSessionStorage<number>('table_no', 1);
 
   const incrementTable = () => {
-      setCurrentTable(currentTable+1);
+    setCurrentTable(currentTable+1);
   };
 
   return { currentTable, incrementTable };

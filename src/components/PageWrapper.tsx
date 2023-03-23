@@ -8,17 +8,17 @@ interface PageWrapperProps {
 }
 
 export const PageWrapper = ({children, heading, subheading}: PageWrapperProps) => {
-    return (
-        <Grid
-            container
-            sx={{mt: 20}}
-            textAlign={'center'}
-            direction={'column'}
-            alignItems={'center'}
-        >
-            <Typography variant={'h1'}>{heading}</Typography>
-            <Typography variant={'h2'}>{subheading}</Typography>
-            {children}
-        </Grid>
-    );
+  return (
+    <Grid
+      container
+      sx={{mt: 20}}
+      textAlign={'center'}
+      direction={'column'}
+      alignItems={'center'}
+    >
+      <Typography variant={'h1'}>{heading}</Typography>
+      <Typography variant={'h2'}>{subheading}</Typography>
+      {children}
+    </Grid>
+  );
 };

@@ -10,6 +10,7 @@
             { "vars": "all", "varsIgnorePattern": "^_", "args": "after-used", "argsIgnorePattern": "^_" }
         ],
         "semi": ["error", "always"],
-        "quotes": ["error", "single"]
+        "quotes": ["error", "single"],
+        "indent": ["error", 2]
     }
 }

@@ -18,34 +18,34 @@ interface props {
 }
 
 export const setField = (fieldName: string, newValue: string) => {
-    const field = screen.getByRole('textbox', {name: fieldName});
-    fireEvent.change(field, { target: { value: newValue } });
+  const field = screen.getByRole('textbox', {name: fieldName});
+  fireEvent.change(field, { target: { value: newValue } });
 };
 
 export const clickButton = (buttonName: string) => {
-    const button = screen.getByRole('button', {name: buttonName});
-    expect(button).toBeInTheDocument();
-    userEvent.click(button);
+  const button = screen.getByRole('button', {name: buttonName});
+  expect(button).toBeInTheDocument();
+  userEvent.click(button);
 };
 
 export const mockQueryClient = new QueryClient();
 
 export const renderWithProviders = ({children, isAuthenticated, login, deleteOrder, createOrder, search}: props) => {
-    return render(
+  return render(
 
-        <QueryClientProvider client={mockQueryClient}>
-            <AuthContext.Provider value={{isAuthenticated: isAuthenticated ?? false, login: login ?? jest.fn(), token: ''}}>
-                <OrderContext.Provider
-                    value={{
-                        orders: [mockOrder1234(), mockOrder5678()],
-                        deleteOrder: deleteOrder ?? jest.fn(),
-                        createOrder: createOrder ?? jest.fn()
-                    }}>
-                    <SearchContext.Provider value={{filteredOrders: [mockOrder1234(), mockOrder5678()], search: search ?? jest.fn()}}>
-                        {children}
-                    </SearchContext.Provider>
-                </OrderContext.Provider>
-            </AuthContext.Provider>
-        </QueryClientProvider>
-    );
+    <QueryClientProvider client={mockQueryClient}>
+      <AuthContext.Provider value={{isAuthenticated: isAuthenticated ?? false, login: login ?? jest.fn(), token: ''}}>
+        <OrderContext.Provider
+          value={{
+            orders: [mockOrder1234(), mockOrder5678()],
+            deleteOrder: deleteOrder ?? jest.fn(),
+            createOrder: createOrder ?? jest.fn()
+          }}>
+          <SearchContext.Provider value={{filteredOrders: [mockOrder1234(), mockOrder5678()], search: search ?? jest.fn()}}>
+            {children}
+          </SearchContext.Provider>
+        </OrderContext.Provider>
+      </AuthContext.Provider>
+    </QueryClientProvider>
+  );
 };
