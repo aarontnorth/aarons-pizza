@@ -3,6 +3,7 @@ import StyledButton from "../components/StyledButton";
 import {useOrderPizza} from "../api/orders";
 import {Field, Form, Formik} from "formik";
 import TextFieldWithHeader from "../components/TextFieldWithHeader";
+import {PageWrapper} from "../components/PageWrapper";
 
 const Order = () => {
     const orderPizza = useOrderPizza();
@@ -18,15 +19,7 @@ const Order = () => {
     }
 
     return (
-        <Grid
-            container
-            sx={{mt: 20}}
-            textAlign={"center"}
-            direction={"column"}
-            alignItems={"center"}
-        >
-            <Typography variant={"h1"}>Order a pie!</Typography>
-            <Typography variant={"h2"}>Customize your order</Typography>
+        <PageWrapper heading={"Order a pie!"} subheading={"Customize your order"}>
             <Formik
                 initialValues={{ crust: "Regular", flavor: "Cheese", size: "Medium" }}
                 onSubmit={(values, actions) => {
@@ -43,8 +36,7 @@ const Order = () => {
                     </StyledButton>
                 </Form>
             </Formik>
-
-        </Grid>
+        </PageWrapper>
     )
 }
 
