@@ -1,8 +1,9 @@
-import {Card, CardContent, Grid, Typography} from "@mui/material";
+import {Button, Card, CardContent, Grid, Typography} from "@mui/material";
 import {Order} from "../types";
 
 interface OrderCardProps {
     order: Order;
+    onDelete: () => void;
 }
 
 type pizzaSize = 'S' | 'M' | 'L' ;
@@ -17,7 +18,7 @@ const toSentenceCase = (text: string) => {
     return text.slice(0,1).toUpperCase() + text.slice(1).toLowerCase();
 }
 
-export const OrderCard = ({order}: OrderCardProps) => {
+export const OrderCard = ({order, onDelete}: OrderCardProps) => {
     const size = pizzaSizesEnum[order.Size as pizzaSize];
     const flavor = toSentenceCase(order.Flavor);
     const crust = toSentenceCase(order.Crust);
@@ -40,12 +41,26 @@ export const OrderCard = ({order}: OrderCardProps) => {
             <Grid item xs={12}>
                 <Card>
                     <CardContent>
-                        <Grid container textAlign={'left'}>
-                            {pizzaDetail(`Flavor: ${flavor}`)}
-                            {pizzaDetail(`Size: ${size}`)}
-                            {pizzaDetail(`Crust: ${crust}`)}
-                            {pizzaDetail(`Table number: ${order.Table_No}`)}
-                            {pizzaDetail(`Ordered at: ${order.Timestamp}`)}
+                        <Grid container>
+                            <Grid item xs={8}>
+                                <Grid container textAlign={'left'}>
+                                    {pizzaDetail(`Flavor: ${flavor}`)}
+                                    {pizzaDetail(`Size: ${size}`)}
+                                    {pizzaDetail(`Crust: ${crust}`)}
+                                    {pizzaDetail(`Table number: ${order.Table_No}`)}
+                                    {pizzaDetail(`Ordered at: ${order.Timestamp}`)}
+                                </Grid>
+                            </Grid>
+                            <Grid item xs={4} display={'flex'} justifyContent={'right'}>
+                                <Button
+                                    variant="contained"
+                                    color="error"
+                                    sx={{height: 'fit-content'}}
+                                    onClick={onDelete}
+                                >
+                                    Delete
+                                </Button>
+                            </Grid>
                         </Grid>
                     </CardContent>
                 </Card>

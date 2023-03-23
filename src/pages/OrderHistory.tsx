@@ -3,7 +3,6 @@ import {Grid, Typography} from "@mui/material";
 import {useFetchOrders} from "../api/get-orders";
 
 const OrderHistory = () => {
-
     const orders = useFetchOrders();
 
     return (
@@ -19,7 +18,7 @@ const OrderHistory = () => {
             </Grid>
             <Grid item xs={6}>
                 {orders && orders.map(order => {
-                    return (<OrderCard key={order.Order_ID} order={order}/>)}
+                    return (<OrderCard key={order.Order_ID} order={order} onDelete={()=>{}}/>)}
                 )}
             </Grid>
         </Grid>
