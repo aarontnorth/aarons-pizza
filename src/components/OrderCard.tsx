@@ -6,20 +6,12 @@ interface OrderCardProps {
     onDelete: (orderId: string) => void;
 }
 
-type pizzaSize = 'S' | 'M' | 'L' ;
-
-enum pizzaSizesEnum {
-    'S' = 'Small',
-    'M' = 'Medium',
-    'L' = 'Large',
-}
-
 const toSentenceCase = (text: string) => {
     return text.slice(0,1).toUpperCase() + text.slice(1).toLowerCase();
 }
 
 export const OrderCard = ({order, onDelete}: OrderCardProps) => {
-    const size = pizzaSizesEnum[order.Size as pizzaSize];
+    const size = toSentenceCase(order.Size);
     const flavor = toSentenceCase(order.Flavor);
     const crust = toSentenceCase(order.Crust);
 
