@@ -29,6 +29,15 @@ describe("<Login>", () => {
         )
     })
 
+    it('should show error and not submit if fields empty', async () => {
+        const mockLogin = jest.fn();
+        await renderWithProviders({children : <Login />, login: mockLogin});
+        clickButton('Sign in');
+        await waitFor(() =>
+            expect(mockLogin).not.toHaveBeenCalled()
+        )
+    })
+
     it('should redirect to home if authenticated', async () => {
         renderWithProviders({children : <Login/>, isAuthenticated : true})
         expect(mockNavigate).toHaveBeenCalledWith('/')

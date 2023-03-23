@@ -33,7 +33,7 @@ const StyledTextField = styled(TextField)({
 
 const TextFieldWithHeader = ({label, field}: TextFieldProps ) => {
     return (
-        <Grid container direction={'column'} sx={{mb: 4}}>
+        <Grid container direction={'column'} sx={{mt: 4}}>
             <StyledTextField
                 {...field}
                 label={label}
