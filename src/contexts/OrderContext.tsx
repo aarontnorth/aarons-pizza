@@ -37,7 +37,8 @@ export const OrderProvider = ({ children }: any) => {
     },
     onSuccess: (data) => {setOrders(data);},
     onError: (error) => {
-      if(isExpiredToken(error)){auth.logout();}
+      //@ts-ignore
+      if(isExpiredToken(error.response.data.msg)){auth.logout();}
     }
   });
 
@@ -50,7 +51,8 @@ export const OrderProvider = ({ children }: any) => {
       snack.handleSetAlert('Thank you for your order!');
     },
     onError: (error) => {
-      if(isExpiredToken(error)){auth.logout();}
+      //@ts-ignore
+      if(isExpiredToken(error.response.data.msg)){auth.logout();}
     }
   });
 
@@ -59,15 +61,15 @@ export const OrderProvider = ({ children }: any) => {
   };
 
   const deleteMutation = useMutation({
-    mutationFn:
-            async (orderId: string) => {
-              return await deleteOrderById(orderId, auth.token!!);
-            },
+    mutationFn: async (orderId: string) => {
+      return await deleteOrderById(orderId, auth.token!!);
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: ['fetch-orders']});
     },
     onError: (error) => {
-      if(isExpiredToken(error)){auth.logout();}
+      //@ts-ignore
+      if(isExpiredToken(error.response.data.msg)){auth.logout();}
     }
   }
   );
