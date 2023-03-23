@@ -1,3 +1,4 @@
+import React from "react";
 import {createContext, useEffect, useState} from "react";
 import {authenticateUser, Credentials} from "../api/auth";
 import {useSessionStorage} from "usehooks-ts";
@@ -11,6 +12,7 @@ interface AuthContextProps {
 
 const AuthContext = createContext<AuthContextProps>({
   isAuthenticated: false,
+  // eslint-disable-next-line
   login: (credentials: Credentials) => {},
   token: ''
 });
@@ -38,7 +40,7 @@ export const AuthProvider = ({ children }: any) => {
     authMutation.mutate(credentials)
   }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // eslint-disable-next-line
   useEffect(() => {
     if(token){setIsAuthenticated(true)}
   })

@@ -1,3 +1,4 @@
+import React from "react";
 import {createContext, useContext, useEffect, useState} from "react";
 import OrderContext from "../contexts/OrderContext";
 import lunr from "lunr";
@@ -10,6 +11,7 @@ interface ContextProps {
 
 const SearchContext = createContext<ContextProps>({
   filteredOrders: [],
+  // eslint-disable-next-line
   search: (searchTerm: string) => {},
 });
 
@@ -17,7 +19,7 @@ export const SearchProvider = ({ children }: any) => {
   const {orders} = useContext(OrderContext);
   const [filteredOrders, setFilteredOrders] = useState<Order[]>(orders);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // eslint-disable-next-line
   useEffect(() => {
     setFilteredOrders(orders);
   })

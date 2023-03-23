@@ -1,11 +1,12 @@
-import {Grid} from "@mui/material";
-import TextFieldWithError from "../components/TextFieldWithError";
-import {Field, Form, Formik} from "formik";
-import StyledButton from "../components/StyledButton";
-import authContext from "../contexts/AuthContext";
-import {useContext, useEffect} from "react";
-import {useNavigate} from "react-router-dom";
-import {PageWrapper} from "../components/PageWrapper";
+import React from 'react';
+import {Grid} from '@mui/material';
+import TextFieldWithError from '../components/TextFieldWithError';
+import {Field, Form, Formik} from 'formik';
+import StyledButton from '../components/StyledButton';
+import authContext from '../contexts/AuthContext';
+import {useContext, useEffect} from 'react';
+import {useNavigate} from 'react-router-dom';
+import {PageWrapper} from '../components/PageWrapper';
 import * as Yup from 'yup';
 
 const Login = () => {
@@ -19,35 +20,35 @@ const Login = () => {
 
     useEffect(() => {
         if(isAuthenticated){
-            navigate('/')
+            navigate('/');
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line
     },[isAuthenticated])
 
     return (
-        <PageWrapper heading={"Hello there!"} subheading={"Please sign in"}>
+        <PageWrapper heading={'Hello there!'} subheading={'Please sign in'}>
             <Grid item xs={4} sx={{mt: 4}}>
                 <Formik
                     validationSchema={loginSchema}
                     initialValues={{ username: '', password: '' }}
                     onSubmit={(values, actions) => {
-                        login(values)
+                        login(values);
                         actions.setSubmitting(false);
                     }}
                 >
                     {({ errors, touched }) => (
-                        <Form autoComplete={"off"}>
+                        <Form autoComplete={'off'}>
                             <Field
                                 component={TextFieldWithError}
                                 name="username"
-                                label={"username"}
+                                label={'username'}
                                 hasError={errors.username && touched.username}
                                 errorText={errors.username}
                             />
                             <Field
                                 component={TextFieldWithError}
                                 name="password"
-                                label={"password"}
+                                label={'password'}
                                 hasError={errors.password && touched.password}
                                 errorText={errors.password}
                             />
@@ -57,7 +58,7 @@ const Login = () => {
                 </Formik>
             </Grid>
         </PageWrapper>
-    )
-}
+    );
+};
 
-export default Login
+export default Login;

@@ -1,0 +1,15 @@
+{
+    "extends": ["plugin:react/recommended", "prettier"],
+    "plugins": ["react", "@typescript-eslint", "jest", "unused-imports"],
+    "parser": "@typescript-eslint/parser",
+    "rules": {
+        "no-unused-vars": "off",
+        "unused-imports/no-unused-imports": "error",
+        "unused-imports/no-unused-vars": [
+            "warn",
+            { "vars": "all", "varsIgnorePattern": "^_", "args": "after-used", "argsIgnorePattern": "^_" }
+        ],
+        "semi": ["error", "always"],
+        "quotes": ["error", "single"]
+    }
+}

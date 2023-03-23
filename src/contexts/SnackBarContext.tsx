@@ -1,11 +1,14 @@
+import React from "react";
 import {createContext, useState} from "react";
 import { Snackbar } from "@mui/material";
 
 const SnackBarContext = createContext({
+    // eslint-disable-next-line
     handleSetAlert: (alert: string) => {}
 })
 
 // @ts-ignore
+// eslint-disable-next-line react/prop-types
 export function SnackBarProvider({ children }) {
     const [alert, setAlert] = useState<string>()
     const [open, setOpen] = useState(false);
