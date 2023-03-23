@@ -1,8 +1,7 @@
 import "@testing-library/jest-dom";
 import {fireEvent, screen, waitFor} from "@testing-library/react";
 import Login from "./Login";
-import userEvent from "@testing-library/user-event";
-import {renderWithProviders} from "../test-helpers/helper";
+import {clickButton, renderWithProviders, setField} from "../test-helpers/helper";
 jest.mock('axios');
 
 const mockNavigate = jest.fn();
@@ -22,13 +21,9 @@ describe("<Login>", () => {
         const expectedCredentials = {username: "user", password: "pass"};
         const mockLogin = jest.fn();
         await renderWithProviders({children : <Login />, login: mockLogin});
-        const username = screen.getByRole('textbox', {name: 'username'});
-        fireEvent.change(username, { target: { value: 'user' } });
-        const password = screen.getByRole('textbox', {name: 'password'});
-        fireEvent.change(password, { target: { value: 'pass' } });
-        const signinButton = await screen.findByRole('button', {name: 'Sign in'});
-        expect(signinButton).toBeInTheDocument();
-        userEvent.click(signinButton)
+        setField('username', 'user');
+        setField('password', 'pass');
+        clickButton('Sign in');
         await waitFor(() =>
             expect(mockLogin).toHaveBeenCalledWith(expectedCredentials)
         )

@@ -2,7 +2,7 @@ import "@testing-library/jest-dom";
 import {render, screen} from "@testing-library/react";
 import {OrderCard} from "./OrderCard";
 import {mockOrder1234} from "../test-helpers/mockOrder";
-import userEvent from "@testing-library/user-event";
+import {clickButton} from "../test-helpers/helper";
 
 const mockNavigate = jest.fn();
 jest.mock('react-router-dom', () => ({
@@ -25,8 +25,7 @@ describe("<OrderCard>", () => {
         const mockDelete = jest.fn();
         render(<OrderCard order={mockOrder1234()} onDelete={mockDelete}/>)
 
-        const deleteButton = screen.getByRole('button', {name: 'delete order 1234'});
-        userEvent.click(deleteButton);
+        clickButton('delete order 1234')
         expect(mockDelete).toHaveBeenCalledWith('1234');
     })
 });

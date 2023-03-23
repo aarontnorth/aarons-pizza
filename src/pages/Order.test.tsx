@@ -3,7 +3,7 @@ import {fireEvent, screen, waitFor} from "@testing-library/react";
 import Order from "./Order";
 import {customPizza, mockPizza} from "../test-helpers/mockPizza";
 import userEvent from "@testing-library/user-event";
-import {renderWithProviders} from "../test-helpers/helper";
+import {clickButton, renderWithProviders, setField} from "../test-helpers/helper";
 
 import axios from 'axios';
 jest.mock('axios');
@@ -30,7 +30,7 @@ describe("<Order>", () => {
             createOrder: mockCreateOrder
         });
 
-        clickOrderButton();
+        clickButton('Submit order');
 
         await waitFor(() =>
             expect(mockCreateOrder).toHaveBeenCalledWith(expectedPizza)
@@ -49,7 +49,7 @@ describe("<Order>", () => {
         setField("flavor", "Pepperoni");
         setField("size", "XL");
 
-        clickOrderButton();
+        clickButton('Submit order');
 
         await waitFor(() =>
             expect(mockCreateOrder).toHaveBeenCalledWith(expectedPizza)
@@ -57,14 +57,3 @@ describe("<Order>", () => {
     })
 
 });
-
-const setField = (fieldName: string, newValue: string) => {
-    const field = screen.getByRole('textbox', {name: fieldName});
-    fireEvent.change(field, { target: { value: newValue } });
-}
-
-const clickOrderButton = () => {
-    const orderButton = screen.getByRole('button', {name: 'Submit order'});
-    expect(orderButton).toBeInTheDocument();
-    userEvent.click(orderButton)
-}

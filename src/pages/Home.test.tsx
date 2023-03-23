@@ -1,7 +1,7 @@
 import "@testing-library/jest-dom";
 import {render, screen} from "@testing-library/react";
 import Home from "./Home";
-import userEvent from "@testing-library/user-event";
+import {clickButton} from "../test-helpers/helper";
 
 const mockNavigate = jest.fn();
 jest.mock('react-router-dom', () => ({
@@ -18,17 +18,14 @@ describe("<Home>", () => {
 
     it('should have place order button', () => {
         render(<Home />)
-        const orderButton = screen.getByRole('button', {name: 'Place an order'})
-        expect(orderButton).toBeInTheDocument();
-        userEvent.click(orderButton);
+        clickButton('Place an order');
+
         expect(mockNavigate).toHaveBeenCalledWith('/order')
     })
 
     it('should have order history button', () => {
         render(<Home />)
-        const orderHistoryButton = screen.getByRole('button', {name: 'View order history'})
-        expect(orderHistoryButton).toBeInTheDocument();
-        userEvent.click(orderHistoryButton);
+        clickButton('View order history');
         expect(mockNavigate).toHaveBeenCalledWith('/order-history')
     })
 });

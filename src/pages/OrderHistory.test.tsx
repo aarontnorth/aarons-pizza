@@ -1,8 +1,7 @@
 import "@testing-library/jest-dom";
-import {fireEvent, screen, waitFor} from "@testing-library/react";
+import {screen, waitFor} from "@testing-library/react";
 import OrderHistory from "../pages/OrderHistory";
-import {renderWithProviders} from "../test-helpers/helper";
-import userEvent from "@testing-library/user-event";
+import {clickButton, renderWithProviders, setField} from "../test-helpers/helper";
 
 const mockNavigate = jest.fn();
 jest.mock('react-router-dom', () => ({
@@ -26,8 +25,7 @@ describe("<OrderHistory>", () => {
     it("should delete order", async () => {
         const mockDelete = jest.fn();
         renderWithProviders({children: <OrderHistory />, deleteOrder: mockDelete})
-        const deleteButton = screen.getByLabelText("delete order 1234")
-        userEvent.click(deleteButton);
+        clickButton('delete order 1234');
         await waitFor(() => {
             expect(mockDelete).toHaveBeenCalledWith('1234')
         })
@@ -36,9 +34,8 @@ describe("<OrderHistory>", () => {
     it("should search orders", async () => {
         const mockSearch = jest.fn();
         renderWithProviders({children: <OrderHistory />, search: mockSearch })
-        const searchBar = screen.getByRole('textbox', {name: 'search'});
-        fireEvent.change(searchBar, { target: { value: 'Cheese' } });
-        fireEvent.click(screen.getByRole('button', {name: 'Search'}))
+        setField('search','Cheese');
+        clickButton('Search')
         await waitFor(() => {
             expect(mockSearch).toHaveBeenCalledWith('Cheese')
         })

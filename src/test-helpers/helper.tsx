@@ -17,6 +17,17 @@ interface props {
     search?: (searchTerm: string) => {};
 }
 
+export const setField = (fieldName: string, newValue: string) => {
+    const field = screen.getByRole('textbox', {name: fieldName});
+    fireEvent.change(field, { target: { value: newValue } });
+}
+
+export const clickButton = (buttonName: string) => {
+    const button = screen.getByRole('button', {name: buttonName});
+    expect(button).toBeInTheDocument();
+    userEvent.click(button)
+}
+
 export const mockQueryClient = new QueryClient();
 
 export const renderWithProviders = ({children, isAuthenticated, login, deleteOrder, createOrder, search}: props) => {
