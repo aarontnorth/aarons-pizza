@@ -1,11 +1,12 @@
 import StyledButton from "../components/StyledButton";
-import {useOrderPizza} from "../api/create-order";
 import {Field, Form, Formik} from "formik";
 import TextFieldWithHeader from "../components/TextFieldWithHeader";
 import {PageWrapper} from "../components/PageWrapper";
+import {useContext} from "react";
+import OrderContext from "../contexts/OrderContext";
 
 const Order = () => {
-    const orderPizza = useOrderPizza();
+    const {createOrder} = useContext(OrderContext);
 
     // @ts-ignore
     const handleClick = (values) => {
@@ -14,7 +15,7 @@ const Order = () => {
             "Flavor": values.flavor,
             "Size": values.size,
         }
-        orderPizza.mutate(pizza);
+        createOrder(pizza);
     }
 
     return (

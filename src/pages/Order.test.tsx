@@ -1,7 +1,6 @@
 import "@testing-library/jest-dom";
 import {fireEvent, screen, waitFor} from "@testing-library/react";
 import Order from "./Order";
-import * as orderPizzaHook from "../api/create-order";
 import {customPizza, mockPizza} from "../test-helpers/mockPizza";
 import userEvent from "@testing-library/user-event";
 import {renderWithProviders} from "../test-helpers/helper";
@@ -25,28 +24,26 @@ describe("<Order>", () => {
 
     it('should submit default order', async () => {
         const expectedPizza = mockPizza();
-        const mockMutate = jest.fn()
-        jest.spyOn(orderPizzaHook, 'useOrderPizza').mockReturnValue(
-        {...jest.requireActual('../api/orders'), mutate: mockMutate}
-        );
-
-        renderWithProviders({children : <Order />});
+        const mockCreateOrder = jest.fn()
+        renderWithProviders(
+        {children : <Order />,
+            createOrder: mockCreateOrder
+        });
 
         clickOrderButton();
 
         await waitFor(() =>
-            expect(mockMutate).toHaveBeenCalledWith(expectedPizza)
+            expect(mockCreateOrder).toHaveBeenCalledWith(expectedPizza)
         )
     })
 
     it("should submit custom order", async () => {
         const expectedPizza = customPizza("Thin", "Pepperoni", "XL")
-        const mockMutate = jest.fn()
-        jest.spyOn(orderPizzaHook, 'useOrderPizza').mockReturnValue(
-            {...jest.requireActual('../api/orders'), mutate: mockMutate}
-        );
-
-        renderWithProviders({children : <Order />});
+        const mockCreateOrder = jest.fn()
+        renderWithProviders(
+            {children : <Order />,
+                createOrder: mockCreateOrder
+            });
 
         setField("crust", "Thin");
         setField("flavor", "Pepperoni");
@@ -55,7 +52,7 @@ describe("<Order>", () => {
         clickOrderButton();
 
         await waitFor(() =>
-            expect(mockMutate).toHaveBeenCalledWith(expectedPizza)
+            expect(mockCreateOrder).toHaveBeenCalledWith(expectedPizza)
         )
     })
 

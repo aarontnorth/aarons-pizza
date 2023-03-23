@@ -1,28 +1,28 @@
 import {createContext, useContext, useEffect, useState} from "react";
 import {useMutation, useQuery} from "@tanstack/react-query";
 import authContext from "../contexts/AuthContext";
-import {deleteOrderById, getOrders} from "../api/orders";
-import {Order} from "../types";
+import {createOrderForTable, deleteOrderById, getOrders} from "../api/orders";
+import {Order, Pizza} from "../types";
+import useOrderSessionStorage from "../hooks/useOrderSessionStorage";
+import snackBarContext from "../contexts/SnackBarContext";
 
 interface ContextProps {
   orders: Order[];
   deleteOrder: (orderId: string) => void;
+  createOrder: (pizza: Pizza) => void;
 }
 
 const OrderContext = createContext<ContextProps>({
   orders: [],
   deleteOrder: (orderId: string) => {},
+  createOrder: (pizza: Pizza) => {},
 });
 
 export const OrderProvider = ({ children }: any) => {
-  const [orders, setOrders] = useState<Order[]>([])
-  const auth = useContext(authContext)
-
-  const deleteMutation = useMutation(
-      async (orderId: string) => {
-        return await deleteOrderById(orderId, auth.token);
-      },
-  )
+  const {currentTable, incrementTable} = useOrderSessionStorage();
+  const [orders, setOrders] = useState<Order[]>([]);
+  const snack = useContext(snackBarContext);
+  const auth = useContext(authContext);
 
   const { data } = useQuery({
     queryKey: ['fetch-orders'],
@@ -32,6 +32,26 @@ export const OrderProvider = ({ children }: any) => {
     });
     }
   })
+
+  const createOrderMutation = useMutation( {
+    mutationFn: async (pizza: Pizza) => {
+      return await createOrderForTable(pizza, currentTable, auth.token);
+    },
+    onSuccess: () => {
+      incrementTable();
+      snack.handleSetAlert('Thank you for your order!')
+    }
+  });
+
+  const createOrder = (pizza: Pizza) => {
+    createOrderMutation.mutate(pizza);
+  }
+
+  const deleteMutation = useMutation(
+      async (orderId: string) => {
+        return await deleteOrderById(orderId, auth.token);
+      },
+  )
 
   const deleteOrder = (orderId: string) => {
     deleteMutation.mutate(orderId);
@@ -44,7 +64,7 @@ export const OrderProvider = ({ children }: any) => {
   },[data])
 
   return (
-    <OrderContext.Provider value={{ orders, deleteOrder }}>
+    <OrderContext.Provider value={{ orders, createOrder, deleteOrder }}>
       {children}
     </OrderContext.Provider>
   );
