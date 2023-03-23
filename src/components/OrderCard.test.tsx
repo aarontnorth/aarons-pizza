@@ -19,7 +19,7 @@ describe('<OrderCard>', () => {
     expect(screen.getByText('Size: Medium')).toBeInTheDocument();
     expect(screen.getByText('Flavor: Cheese')).toBeInTheDocument();
     expect(screen.getByText('Crust: Regular')).toBeInTheDocument();
-    expect(screen.getByText('Ordered at: 12:30')).toBeInTheDocument();
+    expect(screen.getByText('Ordered at: 3/23/2023, 2:00:36 PM')).toBeInTheDocument();
   });
 
   it('should delete order', () => {

@@ -11,10 +11,16 @@ const toSentenceCase = (text: string) => {
   return text.slice(0,1).toUpperCase() + text.slice(1).toLowerCase();
 };
 
+const getReadableTimestamp = (timestamp: string) => {
+  const date = new Date(timestamp);
+  return date.toLocaleString();
+};
+
 export const OrderCard = ({order, onDelete}: OrderCardProps) => {
   const size = toSentenceCase(order.Size);
   const flavor = toSentenceCase(order.Flavor);
   const crust = toSentenceCase(order.Crust);
+  const readableTimestamp = getReadableTimestamp(order.Timestamp);
 
   const handleClick = () => {
     onDelete(order.Order_ID);
@@ -45,7 +51,7 @@ export const OrderCard = ({order, onDelete}: OrderCardProps) => {
                   {pizzaDetail(`Size: ${size}`)}
                   {pizzaDetail(`Crust: ${crust}`)}
                   {pizzaDetail(`Table number: ${order.Table_No}`)}
-                  {pizzaDetail(`Ordered at: ${order.Timestamp}`)}
+                  {pizzaDetail(`Ordered at: ${readableTimestamp}`)}
                 </Grid>
               </Grid>
               <Grid item xs={12} md={4} display={'flex'} justifyContent={'right'}>
