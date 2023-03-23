@@ -7,6 +7,7 @@ import TextFieldWithError from '../components/TextFieldWithError';
 import {Field, Form, Formik} from 'formik';
 import StyledButton from '../components/StyledButton';
 import SearchContext from '../contexts/SearchContext';
+import {PizzaBreadcrumbs} from '../components/PizzaBreadcrumbs';
 
 const OrderHistory = () => {
   const {deleteOrder} = useContext(OrderContext);
@@ -18,43 +19,46 @@ const OrderHistory = () => {
   };
 
   return (
-    <Grid
-      container
-      sx={{mt: 20}}
-      textAlign={'center'}
-      display={'flex'}
-      justifyContent={'center'}
-    >
-      <Grid item xs={12}>
-        <Typography sx={{mb: 4}} variant={'h1'}>Order History</Typography>
-        <Typography variant={'h2'}>Filter your orders</Typography>
-      </Grid>
-      <Grid item xs={6}>
-        <Formik
-          initialValues={{ search: '' }}
-          onSubmit={(values, actions) => {
-            search(values.search);
-            actions.setSubmitting(false);
-          }}
-        >
-          <Form autoComplete={'off'}>
-            <Grid container sx={{alignItems: 'baseline'}} display={'flex'}>
-              <Grid item xs={10}>
-                <Field component={TextFieldWithError} name="search" label={'search'} />
+    <>
+      <PizzaBreadcrumbs path={'home/orders'}/>
+      <Grid
+        container
+        sx={{mt:5}}
+        textAlign={'center'}
+        display={'flex'}
+        justifyContent={'center'}
+      >
+        <Grid item xs={12}>
+          <Typography sx={{mb: 4}} variant={'h1'}>Order History</Typography>
+          <Typography variant={'h2'}>Filter your orders</Typography>
+        </Grid>
+        <Grid item xs={6}>
+          <Formik
+            initialValues={{ search: '' }}
+            onSubmit={(values, actions) => {
+              search(values.search);
+              actions.setSubmitting(false);
+            }}
+          >
+            <Form autoComplete={'off'}>
+              <Grid container sx={{alignItems: 'baseline'}} display={'flex'}>
+                <Grid item xs={10}>
+                  <Field component={TextFieldWithError} name="search" label={'search'} />
+                </Grid>
+                <Grid item xs={2}>
+                  <StyledButton type="submit">Search</StyledButton>
+                </Grid>
               </Grid>
-              <Grid item xs={2}>
-                <StyledButton type="submit">Search</StyledButton>
-              </Grid>
-            </Grid>
-          </Form>
-        </Formik>
-        <Grid sx={{mt:6}}>
-          {filteredOrders && filteredOrders.map(order => {
-            return (<OrderCard key={order.Order_ID} order={order} onDelete={handleDelete}/>);}
-          )}
+            </Form>
+          </Formik>
+          <Grid sx={{mt:6}}>
+            {filteredOrders && filteredOrders.map(order => {
+              return (<OrderCard key={order.Order_ID} order={order} onDelete={handleDelete}/>);}
+            )}
+          </Grid>
         </Grid>
       </Grid>
-    </Grid>
+    </>
   );
 };
 

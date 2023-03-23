@@ -7,7 +7,7 @@ interface OrderCardProps {
     onDelete: (orderId: string) => void;
 }
 
-const toSentenceCase = (text: string) => {
+export const toSentenceCase = (text: string) => {
   return text.slice(0,1).toUpperCase() + text.slice(1).toLowerCase();
 };
 
@@ -62,7 +62,7 @@ export const OrderCard = ({order, onDelete}: OrderCardProps) => {
                   onClick={handleClick}
                   aria-label={`delete order ${order.Order_ID}`}
                 >
-                                    Delete
+                  Delete
                 </Button>
               </Grid>
             </Grid>
