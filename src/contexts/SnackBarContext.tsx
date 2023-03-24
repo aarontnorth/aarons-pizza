@@ -1,20 +1,22 @@
 import React from 'react';
 import {createContext, useState} from 'react';
-import {Alert, Snackbar} from '@mui/material';
+import {Alert, AlertColor, Snackbar} from '@mui/material';
 
 const SnackBarContext = createContext({
   // eslint-disable-next-line
-    handleSetAlert: (alert: string) => {}
+    handleSetAlert: (alert: string, severity?: AlertColor) => {}
 });
 
 // @ts-ignore
 // eslint-disable-next-line react/prop-types
 export function SnackBarProvider({ children }) {
   const [alert, setAlert] = useState<string>();
+  const [severity, setSeverity] = useState<AlertColor>('success');
   const [open, setOpen] = useState(false);
 
-  const handleSetAlert = (alert: string) => {
+  const handleSetAlert = (alert: string, severity: AlertColor | undefined) => {
     setAlert(alert);
+    setSeverity(severity ?? 'success');
     setOpen(true);
   };
 
@@ -30,7 +32,7 @@ export function SnackBarProvider({ children }) {
         onClose={handleClose}
         open={open}
       >
-        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+        <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
           {alert}
         </Alert>
       </Snackbar>

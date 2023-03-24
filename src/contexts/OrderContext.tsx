@@ -50,7 +50,7 @@ export const OrderProvider = ({ children }: any) => {
     onError: (error) => {
       //@ts-ignore
       if(isDuplicateTable(error.response.status)){
-        snack.handleSetAlert('That table number is taken. Please try another');
+        snack.handleSetAlert('That table number is taken. Please try another', 'error');
       }
 
       //@ts-ignore
