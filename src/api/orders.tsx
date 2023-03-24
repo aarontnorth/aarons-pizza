@@ -8,9 +8,9 @@ export async function getOrders(token: string){
   return axios.get<Order[]>(baseURL, {headers: headers});
 }
 
-export function createOrderForTable(pizza: Pizza, tableNumber: number, token: string){
+export function createOrderForTable(pizza: Pizza, token: string){
   const headers = {'authorization': `Bearer ${token}`};
-  return axios.post(baseURL, {...pizza, Table_No: tableNumber}, {headers: headers});
+  return axios.post(baseURL, {...pizza}, {headers: headers});
 }
 
 export async function deleteOrderById(orderId: string, token: string){

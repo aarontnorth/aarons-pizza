@@ -4,7 +4,6 @@ import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import authContext from '../contexts/AuthContext';
 import {createOrderForTable, deleteOrderById, getOrders} from '../api/orders';
 import {Order, Pizza} from '../types';
-import useOrderSessionStorage from '../hooks/useOrderSessionStorage';
 import snackBarContext from '../contexts/SnackBarContext';
 
 interface ContextProps {
@@ -22,7 +21,6 @@ const OrderContext = createContext<ContextProps>({
 });
 
 export const OrderProvider = ({ children }: any) => {
-  const {currentTable, incrementTable} = useOrderSessionStorage();
   const queryClient = useQueryClient();
   const [orders, setOrders] = useState<Order[]>([]);
   const snack = useContext(snackBarContext);
@@ -44,10 +42,9 @@ export const OrderProvider = ({ children }: any) => {
 
   const createOrderMutation = useMutation( {
     mutationFn: async (pizza: Pizza) => {
-      return await createOrderForTable(pizza, currentTable, auth.token!!);
+      return await createOrderForTable(pizza, auth.token!!);
     },
     onSuccess: () => {
-      incrementTable();
       snack.handleSetAlert('Thank you for your order!');
     },
     onError: (error) => {

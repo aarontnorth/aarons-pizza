@@ -22,13 +22,14 @@ describe('<Order>', () => {
   });
 
   it('should submit default order', async () => {
-    const expectedPizza = mockPizza();
+    const expectedPizza = {...mockPizza()};
     const mockCreateOrder = jest.fn();
     renderWithProviders(
       {children : <Order />,
         createOrder: mockCreateOrder
       });
 
+    setField('table', '1');
     clickButton('Submit order');
 
     await waitFor(() =>
@@ -37,7 +38,7 @@ describe('<Order>', () => {
   });
 
   it('should submit custom order', async () => {
-    const expectedPizza = customPizza('Thin', 'Pepperoni', 'XL');
+    const expectedPizza = customPizza('Thin', 'Pepperoni', 'XL', 2);
     const mockCreateOrder = jest.fn();
     renderWithProviders(
       {children : <Order />,
@@ -47,6 +48,7 @@ describe('<Order>', () => {
     setField('crust', 'Thin');
     setField('flavor', 'Pepperoni');
     setField('size', 'XL');
+    setField('table', '2');
 
     clickButton('Submit order');
 

@@ -19,15 +19,13 @@ describe('Orders Api', () => {
 
   it('should call api to create order', async () => {
     const pizza = mockPizza();
-    const tableNumber = 1;
     const mockHeader = {'headers': {'authorization': 'Bearer mockToken'}};
-    const expectedPayload = {...pizza, Table_No: tableNumber};
 
-    await waitFor(() => createOrderForTable(pizza, tableNumber, 'mockToken'));
+    await waitFor(() => createOrderForTable(pizza, 'mockToken'));
 
     expect(axios.post).toHaveBeenCalledWith(
       'https://pizza-api-app.herokuapp.com/api/orders',
-      expectedPayload,
+      pizza,
       mockHeader
     );
   });

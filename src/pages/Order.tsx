@@ -15,6 +15,7 @@ const Order = () => {
     crust: Yup.string().required('Crust is required'),
     flavor: Yup.string().required('Flavor is required'),
     size: Yup.string().required('Size is required'),
+    table: Yup.string().required('Table number is required'),
   });
 
   // @ts-ignore
@@ -23,6 +24,7 @@ const Order = () => {
       'Crust': values.crust,
       'Flavor': values.flavor,
       'Size': values.size,
+      'Table_No': parseInt(values.table)
     };
     createOrder(pizza);
   };
@@ -33,7 +35,7 @@ const Order = () => {
       <PageWrapper heading={'Order a pie!'} subheading={'Customize your order'}>
         <Formik
           validationSchema={orderSchema}
-          initialValues={{ crust: 'Regular', flavor: 'Cheese', size: 'Medium' }}
+          initialValues={{ crust: 'Regular', flavor: 'Cheese', size: 'Medium', table: undefined }}
           onSubmit={(values, actions) => {
             handleClick(values);
             actions.setSubmitting(false);
@@ -61,6 +63,13 @@ const Order = () => {
                 label={'size'}
                 hasError={errors.size && touched.size}
                 errorText={errors.size}
+              />
+              <Field
+                component={TextFieldWithError}
+                name="table"
+                label={'table'}
+                hasError={errors.table && touched.table}
+                errorText={errors.table}
               />
               <StyledButton sx={{mt: 4, width: 'fit-content'}} type={'submit'}>
                 Submit order
