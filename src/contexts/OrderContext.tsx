@@ -49,6 +49,11 @@ export const OrderProvider = ({ children }: any) => {
     },
     onError: (error) => {
       //@ts-ignore
+      if(isDuplicateTable(error.response.status)){
+        snack.handleSetAlert('That table number is taken. Please try another');
+      }
+
+      //@ts-ignore
       if(isExpiredToken(error.response.data.msg)){auth.logout();}
     }
   });
@@ -77,6 +82,10 @@ export const OrderProvider = ({ children }: any) => {
 
   const isExpiredToken = (error: string) => {
     return error.includes('Token has expired');
+  };
+
+  const isDuplicateTable = (status: number) => {
+    return status === 409;
   };
 
   return (
